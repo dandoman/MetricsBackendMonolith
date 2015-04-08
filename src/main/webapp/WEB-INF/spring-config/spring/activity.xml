@@ -10,20 +10,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<mvc:annotation-driven />
 
-	<import resource="spring/*.xml"/>
-
-	<bean id="jacksonMessageConverter"
-		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-
-	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<ref bean="jacksonMessageConverter" />
-			</list>
-		</property>
-	</bean>
+	<bean id="customerNotificationActivity" class="com.groupon.cns.activity.CustomerNotificationActivity" />
 
 </beans>

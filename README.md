@@ -1,7 +1,7 @@
 
 
 Build service:
-	mvn clean compile
+	mvn clean compile test package
 
 Run service locally:
 	mvn jetty:run
