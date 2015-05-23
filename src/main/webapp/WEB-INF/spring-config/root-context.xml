@@ -12,7 +12,7 @@
 
 	<mvc:annotation-driven />
 
-	<import resource="spring/*.xml"/>
+	<import resource="spring/*.xml" />
 
 	<bean id="jacksonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
@@ -25,5 +25,15 @@
 			</list>
 		</property>
 	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+		<property name="location">
+			<value>classpath:env.properties</value>
+		</property>
+	</bean>
+
+
 
 </beans>
