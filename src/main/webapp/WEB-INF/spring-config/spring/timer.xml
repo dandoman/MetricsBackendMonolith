@@ -14,10 +14,10 @@
 
 
 
-	<bean id="specialClaimPublisherTask" class="com.groupon.specials.timer.SpecialsClaimPublisher" />
+	<bean id="metricsCruncherTask" class="com.cante.metrics.timer.MetricsCruncher" />
 
 	<task:scheduled-tasks>
-		<task:scheduled ref="specialClaimPublisherTask" method="runTask"
+		<task:scheduled ref="metricsCruncherTask" method="runTask"
 			initial-delay="60000" fixed-rate="120000" />
 	</task:scheduled-tasks>
 

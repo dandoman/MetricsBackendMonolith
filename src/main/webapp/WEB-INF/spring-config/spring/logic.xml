@@ -10,9 +10,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<bean id="specialsLogic" class="com.groupon.specials.logic.SpecialsLogic">
+	<bean id="metricsLogic" class="com.cante.metrics.logic.MetricsLogic">
 		<property name="dao" ref="specialsDao" />
 	</bean>
-	<bean id="specialsPresentationLogic" class="com.groupon.specials.logic.SpecialsPresentationLogic" />
 
 </beans>
