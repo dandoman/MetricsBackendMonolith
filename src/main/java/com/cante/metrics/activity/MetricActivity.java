@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cante.metrics.logic.MetricLogic;
+import com.cante.metrics.response.Response;
 
 @Log4j
 @Controller
-@RequestMapping(value = "/read")
+@RequestMapping(value = "/metric")
 public class MetricActivity {
     
     private static final String APPLICATION_JSON = "application/json";
-    @Setter private MetricLogic logic;
     
-    @RequestMapping(method = RequestMethod.GET, produces = { APPLICATION_JSON }, value = "/db")
+    @RequestMapping(method = RequestMethod.GET, produces = { APPLICATION_JSON })
     @ResponseBody
-    public String helloWorld() {
-        String message = "Youd database is: ";
-        log.warn(message);
-        return message;
+    public Response getMetrics() {
+       Response r = new Response();
+       r.setMessage("Hello world (metrics)!");
+       return r;
     }
 }

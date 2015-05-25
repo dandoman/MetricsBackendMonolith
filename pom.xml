@@ -113,12 +113,6 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>uat</id>
-			<properties>
-				<build.profile.id>uat</build.profile.id>
-			</properties>
-		</profile>
-		<profile>
 			<id>staging</id>
 			<properties>
 				<build.profile.id>staging</build.profile.id>
