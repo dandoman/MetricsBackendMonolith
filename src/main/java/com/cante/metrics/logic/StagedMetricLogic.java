@@ -29,4 +29,8 @@ public class StagedMetricLogic {
 		
 		return failures;
 	}
+
+	public List<StagedMetric> getStagedMetrics() {
+		return dao.getAllStagedMetrics();
+	}
 }
