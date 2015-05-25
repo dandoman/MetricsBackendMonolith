@@ -10,8 +10,12 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<bean id="metricsLogic" class="com.cante.metrics.logic.MetricsLogic">
-		<property name="dao" ref="specialsDao" />
+	<bean id="metricLogic" class="com.cante.metrics.logic.MetricLogic" />
+	<bean id="crunchingLogic" class="com.cante.metrics.logic.CrunchingLogic" />
+	<bean id="lockProcessingLogic" class="com.cante.metrics.logic.LockProcessingLogic" />
+	<bean id="monitorLogic" class="com.cante.metrics.logic.MonitorLogic" />
+	<bean id="stagedMetricLogic" class="com.cante.metrics.logic.StagedMetricLogic">
+		<property name="dao" ref="stagedMetricDao" />
 	</bean>
 
 </beans>

@@ -27,7 +27,7 @@ public class MetricStagingActivity {
     @ResponseBody
     public Response upload(BulkUploadRequest request) {
         Response r = new Response();
-        logic.stageMetrics(request.getMetrics());
+        logic.stageMetrics(request.getApiKey(),request.getMetrics());
         return r;
     }
 

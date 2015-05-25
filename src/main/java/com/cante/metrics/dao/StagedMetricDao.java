@@ -1,9 +1,9 @@
 package com.cante.metrics.dao;
 
-import com.cante.metrics.entity.StagedMetric;
+import com.cante.metrics.entity.pojo.StagedMetric;
 
 public interface StagedMetricDao {
 
-	public void create(StagedMetric m);
+	public void create(String ownerId, StagedMetric m);
 
 }

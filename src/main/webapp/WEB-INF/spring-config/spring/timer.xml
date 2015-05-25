@@ -15,10 +15,13 @@
 
 
 	<bean id="metricsCruncherTask" class="com.cante.metrics.timer.MetricsCruncher" />
+	<bean id="monitorProcessingTask" class="com.cante.metrics.timer.MonitorProcessor" />
 
 	<task:scheduled-tasks>
 		<task:scheduled ref="metricsCruncherTask" method="runTask"
 			initial-delay="60000" fixed-rate="120000" />
+		<task:scheduled ref="monitorProcessingTask" method="runTask"
+			initial-delay="60000" fixed-rate="300000" /> <!-- May end up doing this with SQS -->
 	</task:scheduled-tasks>
 
 </beans> 

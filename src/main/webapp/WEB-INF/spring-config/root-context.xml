@@ -12,7 +12,11 @@
 
 	<mvc:annotation-driven />
 
-	<import resource="spring/*.xml" />
+	<import resource="spring/activity.xml" />
+	<import resource="spring/client.xml" />
+	<import resource="spring/dao.xml" />
+	<import resource="spring/logic.xml" />
+	<import resource="spring/timer.xml" />
 
 	<bean id="jacksonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />

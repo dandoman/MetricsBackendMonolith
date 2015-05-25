@@ -10,8 +10,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<bean id="metricDao" class="com.cante.metrics.dao.MetricDao">
-		<property name="dbName" value="${db.name}" />
-	</bean>
+	<bean id="stagedMetricDao" class="com.cante.metrics.dao.impl.StagedMetricDaoImpl"/>
 
 </beans>

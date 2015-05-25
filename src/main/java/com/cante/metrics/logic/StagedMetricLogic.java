@@ -7,18 +7,20 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 import com.cante.metrics.dao.StagedMetricDao;
-import com.cante.metrics.entity.StagedMetric;
+import com.cante.metrics.entity.pojo.StagedMetric;
 
 @Log4j
 public class StagedMetricLogic {
-	
 	@Setter StagedMetricDao dao;
-
-	public List<StagedMetric> stageMetrics(List<StagedMetric> metrics) {
+	
+	public List<StagedMetric> stageMetrics(String apiKey, List<StagedMetric> metrics) {
 		List<StagedMetric> failures = new ArrayList<StagedMetric>();
+		//getOwnerForAPIKey
+		String ownerId = "342efwdfwef";
+		
 		for(StagedMetric m : metrics){
 			try{
-				dao.create(m);
+				dao.create(ownerId, m);
 			} catch(Exception e){
 				log.error("Error when staging metric",e);
 				failures.add(m);
@@ -26,7 +28,5 @@ public class StagedMetricLogic {
 		}
 		
 		return failures;
-		
 	}
-
 }
