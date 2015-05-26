@@ -13,6 +13,9 @@
 	<bean id="stagedMetricDao" class="com.cante.metrics.dao.impl.StagedMetricDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<bean id="metricDao" class="com.cante.metrics.dao.impl.MetricDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">

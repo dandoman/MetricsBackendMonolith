@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 import com.cante.metrics.dao.StagedMetricDao;
 import com.cante.metrics.entity.StagedMetricEntity;
 import com.cante.metrics.entity.pojo.StagedMetric;
+import com.cante.metrics.entity.pojo.StagedStatus;
 
 @Log4j
 public class StagedMetricDaoImpl implements StagedMetricDao {
@@ -24,7 +25,10 @@ public class StagedMetricDaoImpl implements StagedMetricDao {
 		StagedMetricEntity metric = new StagedMetricEntity(m);
 		metric.setId(UUID.randomUUID().toString());
 		metric.setOwnerId(ownerId);
-		metric.setCreationDate(new Date());
+		Date now = new Date();
+		metric.setCreationDate(now);
+		metric.setLastUpdatedDate(now);
+		metric.setStatus(StagedStatus.CREATED);
 		
 		sessionFactory.getCurrentSession().save(metric);
 	}

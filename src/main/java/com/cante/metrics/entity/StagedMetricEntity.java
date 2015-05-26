@@ -7,12 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import com.cante.metrics.entity.pojo.StagedMetric;
+import com.cante.metrics.entity.pojo.StagedStatus;
 
 @Data
 @Entity
 @Table(name = "staged_metrics")
+@NoArgsConstructor
 public class StagedMetricEntity {
 
 	@Id private String id;
@@ -26,10 +29,8 @@ public class StagedMetricEntity {
 	private String metricName;
 	private double value;
 	private Date creationDate;
-
-	public StagedMetricEntity(){
-		
-	}
+	private Date lastUpdatedDate;
+	private StagedStatus status;
 	
 	public StagedMetricEntity(StagedMetric m) {
 		this.applicationName = m.getApplicationName();
