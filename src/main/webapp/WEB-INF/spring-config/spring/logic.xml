@@ -12,7 +12,7 @@
 
 	<bean id="metricLogic" class="com.cante.metrics.logic.MetricLogic" />
 	<bean id="crunchingLogic" class="com.cante.metrics.logic.CrunchingLogic" />
-	<bean id="lockProcessingLogic" class="com.cante.metrics.logic.LockProcessingLogic" />
+	<bean id="lockManagementLogic" class="com.cante.metrics.logic.LockManagementLogic" />
 	<bean id="monitorLogic" class="com.cante.metrics.logic.MonitorLogic" />
 	<bean id="stagedMetricLogic" class="com.cante.metrics.logic.StagedMetricLogic">
 		<property name="dao" ref="stagedMetricDao" />

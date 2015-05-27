@@ -42,4 +42,10 @@ public class StagedMetricDaoImpl implements StagedMetricDao {
 		return metrics;
 	}
 
+	public List<StagedMetricEntity> getStagedMetricsByOwnerAndRange(String id,
+			Date start, Date end) {
+		// TODO Auto-generated method stub
+		return new ArrayList<StagedMetricEntity>();
+	}
+
 }

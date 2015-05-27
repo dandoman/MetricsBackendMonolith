@@ -14,14 +14,27 @@
 
 
 
-	<bean id="metricsCruncherTask" class="com.cante.metrics.timer.MetricsCruncher" />
-	<bean id="monitorProcessingTask" class="com.cante.metrics.timer.MonitorProcessor" />
+	<bean id="metricsCruncher" class="com.cante.metrics.timer.MetricsCruncher" init-method="init">
+		<property name = "lockLogic" ref="lockManagementLogic" />
+		<property name="crunchingLogic" ref="crunchingLogic" />
+		<property name="metricDao"	 ref="metricDao" />
+		<property name="stagedDao" ref="stagedMetricDao" />
+		<property name="selfHostId" value="${app.name}" />
+	</bean>
+	
+	
+	<bean id="monitorProcessing" class="com.cante.metrics.timer.MonitorProcessor" />
 
 	<task:scheduled-tasks>
-		<task:scheduled ref="metricsCruncherTask" method="runTask"
-			initial-delay="60000" fixed-rate="120000" />
-		<task:scheduled ref="monitorProcessingTask" method="runTask"
-			initial-delay="60000" fixed-rate="300000" /> <!-- May end up doing this with SQS -->
+		<task:scheduled ref="metricsCruncher" method="fiveMinCrunch"
+			cron="0 */5 * * * *" /> <!-- Give a 10 minute padding -->
+		<task:scheduled ref="metricsCruncher" method="hourCrunch"
+			cron="0 15 * * * *" /> <!-- 15th minute of every hour -->
+		<task:scheduled ref="metricsCruncher" method="dayCrunch"
+			cron="0 0 3 * * *" /> <!-- 3am every day -->
+
+		<task:scheduled ref="monitorProcessing" method="runTask"
+			initial-delay="60000" fixed-rate="300000" />
 	</task:scheduled-tasks>
 
 </beans> 

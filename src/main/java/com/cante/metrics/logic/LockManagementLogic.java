@@ -1,5 +1,8 @@
 package com.cante.metrics.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * As hosts come online, they will try to assign themselves responsibility for processing the monitors for different customers
  * They may take away responsibilities from other hosts
@@ -8,6 +11,13 @@ package com.cante.metrics.logic;
  * This will have to be done differently when the data is sharded
  * Locks will need rvns as they need to provide for optimistic locking
  */
-public class LockProcessingLogic {
+public class LockManagementLogic {
+	
+	public List<String> getOwnerIdsForResponsibility(String appId){
+		List<String> ids = new ArrayList<String>();
+		ids.add("123");
+		ids.add("456");
+		return ids;
+	}
 
 }
