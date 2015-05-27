@@ -35,6 +35,7 @@ public class MetricsCruncher {
 
 	public void init(){
 		selfHostId = selfHostId + "-" + UUID.randomUUID().toString();
+		log.info(String.format("Cruncher using %s as host id",selfHostId));
 	}
 	
 	@Transactional
