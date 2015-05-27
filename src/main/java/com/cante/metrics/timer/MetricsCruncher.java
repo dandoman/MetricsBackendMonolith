@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cante.metrics.dao.MetricDao;
 import com.cante.metrics.dao.StagedMetricDao;
+import com.cante.metrics.entity.MetricEntity;
 import com.cante.metrics.entity.StagedMetricEntity;
 import com.cante.metrics.entity.pojo.Metric;
 import com.cante.metrics.logic.CrunchingLogic;
@@ -56,55 +57,86 @@ public class MetricsCruncher {
 					.getStagedMetricsByOwnerAndRange(id, start,end);
 			
 			//Aggregate by all subsets of appName, operation, marketplace,hostname
-			List<Metric> aggregatedMetrics = new ArrayList<Metric>();
 			
 			//All,All,All,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,false,false,false); //100%
+			List<StagedMetricEntity> metrics = crunchingLogic.aggregate(stagedMetrics,false,false,false,false); //100%
+			MetricEntity metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,All,All,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,false,false,false); //75%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,false,false,false); //75%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,operation,All,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,true,false,false); //75%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,true,false,false); //75%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,All,marketplace,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,false,true,false); //75%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,false,true,false); //75%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,All,All,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,false,false,true); //75%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,false,false,true); //75%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,operation,All,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,true,false,false); //50%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,true,false,false); //50%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,All,marketplace,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,false,true,false); //50%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,false,true,false); //50%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,All,All,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,false,false,true); //50%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,false,false,true); //50%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,operation,marketplace,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,true,true,false); //50%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,true,true,false); //50%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,operation,All,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,true,false,true); //50%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,true,false,true); //50%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,All,marketplace,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,false,true,true); //50%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,false,true,true); //50%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,operation,marketplace,All,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,true,true,false); //25%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,true,true,false); //25%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,operation,All,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,true,false,true); //25%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,true,false,true); //25%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,All,marketplace,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,false,true,true); //25%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,false,true,true); //25%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//All,operation,marketplace,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,false,true,true,true); //25%
+			metrics = crunchingLogic.aggregate(stagedMetrics,false,true,true,true); //25%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//App,operation,marketplace,hostname,metric,value
-			crunchingLogic.aggregate(stagedMetrics,true,true,true,true); //5%
+			metrics = crunchingLogic.aggregate(stagedMetrics,true,true,true,true); //5%
+			metricRow = crunchingLogic.computeMetricRow(metrics,null);
+			metricDao.create(id, metricRow);
 			
 			//Total of 800% assuming even distribution, but it wont be that, it will be less, maybe closer to 500%
 			

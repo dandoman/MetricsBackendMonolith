@@ -9,8 +9,17 @@ public class Metric {
 	private String marketplace;
 	private String hostName;
 	private long timeStamp;
-	private Aggregation aggregation;
 	private TimeLevel timeLevel;
 	private String metricName;
-	private double value;
+	private double p0;
+	private double p50;
+	private double p75;
+	private double p90;
+	private double p99;
+	private double p999;
+	private double p9999;
+	private double p100;
+	private double avg;
+	private double count;
+	private double sum;
 }

@@ -16,12 +16,11 @@ import com.cante.metrics.entity.pojo.Metric;
 public class MetricDaoImpl implements MetricDao {
 	@Setter private SessionFactory sessionFactory;
 
-	public void create(String ownerId, Metric m) {
-		MetricEntity metric = new MetricEntity(m);
-		metric.setId(UUID.randomUUID().toString());
-		metric.setOwnerId(ownerId);
-		metric.setCreationDate(new Date());
-		sessionFactory.getCurrentSession().save(metric);
+	public void create(String ownerId, MetricEntity m) {
+		m.setId(UUID.randomUUID().toString());
+		m.setOwnerId(ownerId);
+		m.setCreationDate(new Date());
+		sessionFactory.getCurrentSession().save(m);
 	}
 	
 	public List<Metric> getAllMetrics(){
