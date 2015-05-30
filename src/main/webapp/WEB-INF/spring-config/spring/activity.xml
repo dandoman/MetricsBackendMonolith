@@ -16,4 +16,5 @@
 		<property name="logic" ref="stagedMetricLogic" />
 	</bean>
 
+	<bean id="exceptionHandler" class="com.cante.metrics.exception.handler.TopLevelHandler" />
 </beans>
