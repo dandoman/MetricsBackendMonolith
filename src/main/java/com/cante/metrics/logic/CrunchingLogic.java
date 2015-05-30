@@ -28,18 +28,36 @@ public class CrunchingLogic {
 
 		for(StagedMetricEntity m : stagedMetrics){
 			TupleBuilder builder = new TupleBuilder();
+			
+			//If we aren't aggregating by the field, set it to "ALL"
 			if(appName){
 				builder.addValue(m.getApplicationName());
 			}
+			else{
+				m.setApplicationName("ALL");
+			}
+			
 			if(operation){
 				builder.addValue(m.getOperation());
 			}
+			else{
+				m.setOperation("ALL");
+			}
+			
 			if(marketplace){
 				builder.addValue(m.getMarketplace());
 			}
+			else{
+				m.setMarketplace("ALL");
+			}
+			
 			if(hostname){
 				builder.addValue(m.getHostName());
 			}
+			else{
+				m.setHostName("ALL");
+			}
+			
 			Tuple tuple = builder.build();
 			
 			List<StagedMetricEntity> storedTupleMetrics = aggregation.get(tuple);
