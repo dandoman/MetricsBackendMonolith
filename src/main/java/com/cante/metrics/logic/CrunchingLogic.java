@@ -64,47 +64,86 @@ public class CrunchingLogic {
 	}
 
 	public double computeP0(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		return stagedMetrics.get(0).getValue();
 	}
 
 	public double computeP50(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double index = 0.50*(stagedMetrics.size() - 1);
+		int intIndex = (int) Math.ceil(index);
+		if(intIndex > (stagedMetrics.size() - 1)){
+			return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
+		}
+		return stagedMetrics.get(intIndex).getValue();
 	}
 
 	public double computeP75(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double index = 0.75*(stagedMetrics.size() - 1);
+		int intIndex = (int) Math.ceil(index);
+		if(intIndex > (stagedMetrics.size() - 1)){
+			return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
+		}
+		return stagedMetrics.get(intIndex).getValue();
 	}
 
 	public double computeP90(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double index = 0.90*(stagedMetrics.size() - 1);
+		int intIndex = (int) Math.ceil(index);
+		if(intIndex > (stagedMetrics.size() - 1)){
+			return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
+		}
+		return stagedMetrics.get(intIndex).getValue();
 	}
 
 	public double computeP99(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double index = 0.99*(stagedMetrics.size() - 1);
+		int intIndex = (int) Math.ceil(index);
+		if(intIndex > (stagedMetrics.size() - 1)){
+			return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
+		}
+		return stagedMetrics.get(intIndex).getValue();
 	}
 
 	public double computeP999(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double index = 0.999*(stagedMetrics.size() - 1);
+		int intIndex = (int) Math.ceil(index);
+		if(intIndex > (stagedMetrics.size() - 1)){
+			return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
+		}
+		return stagedMetrics.get(intIndex).getValue();
 	}
 
 	public double computeP9999(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double index = 0.9999*(stagedMetrics.size() - 1);
+		int intIndex = (int) Math.ceil(index);
+		if(intIndex > (stagedMetrics.size() - 1)){
+			return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
+		}
+		return stagedMetrics.get(intIndex).getValue();
 	}
 
 	public double computeP100(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		return stagedMetrics.get(stagedMetrics.size() - 1).getValue();
 	}
 
 	public double computeAvg(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double sum = 0;
+		for(StagedMetricEntity m : stagedMetrics){
+			sum = sum + m.getValue();
+		}
+		
+		return sum/stagedMetrics.size();
 	}
 
 	public double computeCount(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		return stagedMetrics.size();
 	}
 
 	public double computeSum(List<StagedMetricEntity> stagedMetrics) {
-		return 0;
+		double sum = 0;
+		for(StagedMetricEntity m : stagedMetrics){
+			sum = sum + m.getValue();
+		}
+		return sum;
 	}
 
 	public MetricEntity computeMetricRow(List<StagedMetricEntity> metrics,
