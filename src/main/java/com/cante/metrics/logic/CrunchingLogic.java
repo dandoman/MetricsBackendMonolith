@@ -154,6 +154,7 @@ public class CrunchingLogic {
 
 	public MetricEntity computeMetricRow(List<StagedMetricEntity> metrics,
 			StagedMetricEntity sample) {
+		
 		MetricEntity metricEntity = new MetricEntity();
 		metricEntity.setApplicationName(sample.getApplicationName());
 		metricEntity.setHostName(sample.getHostName());
