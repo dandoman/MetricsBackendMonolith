@@ -7,11 +7,15 @@ import java.util.UUID;
 
 import lombok.Setter;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import com.cante.metrics.dao.MetricDao;
 import com.cante.metrics.entity.MetricEntity;
+import com.cante.metrics.entity.StagedMetricEntity;
 import com.cante.metrics.entity.pojo.Metric;
+import com.cante.metrics.entity.pojo.SearchParameters;
 
 public class MetricDaoImpl implements MetricDao {
 	@Setter private SessionFactory sessionFactory;
@@ -30,6 +34,42 @@ public class MetricDaoImpl implements MetricDao {
 			metrics.add(entity.getMetric());
 		}
 		return metrics;
+	}
+
+	public List<Metric> search(SearchParameters sp) {
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(MetricEntity.class);
+		if(sp.getApplicationName() != null) {
+			c.add(Restrictions.eq("applicationName", sp.getApplicationName()));
+		}
+		if(sp.getHostName() != null) {
+			c.add(Restrictions.eq("hostName", sp.getHostName()));
+		}
+		if(sp.getMarketplace() != null) {
+			c.add(Restrictions.eq("marketplace", sp.getMarketplace()));
+		}
+		if(sp.getOperation() != null) {
+			c.add(Restrictions.eq("operation", sp.getOperation()));
+		}
+		if(sp.getMetricName() != null) {
+			c.add(Restrictions.eq("metricName", sp.getMetricName()));
+		}
+		if(sp.getStartTime() != null) {
+			c.add(Restrictions.ge("timeStamp", sp.getStartTime()));
+		}
+		if(sp.getEndTime() != null) {
+			c.add(Restrictions.le("timeStamp", sp.getEndTime()));
+		}
+		List<MetricEntity> result = c.list();
+		if(result == null){
+			return new ArrayList<Metric>();
+		}
+		else{
+			ArrayList<Metric> metrics = new ArrayList<Metric>();
+			for(MetricEntity me : result) {
+				metrics.add(me.getMetric());
+			}
+			return metrics;
+		}
 	}
 
 }
