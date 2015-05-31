@@ -73,12 +73,11 @@ public class MetricsCruncher {
 			List<List<StagedMetricEntity>> metrics;
 
 			// All,All,All,All,metric,value
-			//Special case since the logic wont aggregate by 0 fields, could add this
-			for(StagedMetricEntity me : stagedMetrics){
-				List<StagedMetricEntity> fakeList = new ArrayList<StagedMetricEntity>();
-				fakeList.add(me);
-				MetricEntity metricRow = crunchingLogic.computeMetricRow(fakeList,
-						fakeList.get(0));
+			metrics = crunchingLogic.aggregate(stagedMetrics, false, false,
+					false, false);
+			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
+				MetricEntity metricRow = crunchingLogic.computeMetricRow(
+						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setApplicationName("ALL");
 				metricRow.setOperation("ALL");
 				metricRow.setMarketplace("ALL");

@@ -46,6 +46,8 @@ public class CrunchingLogic {
 				builder.addValue(m.getHostName());
 			}
 			
+			builder.addValue(m.getMetricName());
+			
 			Tuple tuple = builder.build();
 			
 			List<StagedMetricEntity> storedTupleMetrics = aggregation.get(tuple);

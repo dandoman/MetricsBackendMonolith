@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.javatuples.Triplet;
 import org.javatuples.Tuple;
 import org.javatuples.Unit;
@@ -31,6 +32,10 @@ public class TupleBuilder {
 		
 		if(tupleValues.size() == 4){
 			return new Quartet<String,String,String,String>(tupleValues.get(0),tupleValues.get(1),tupleValues.get(2),tupleValues.get(3));
+		}
+		
+		if(tupleValues.size() == 5){
+			return new Quintet<String,String,String,String,String>(tupleValues.get(0),tupleValues.get(1),tupleValues.get(2),tupleValues.get(3),tupleValues.get(4));
 		}
 		
 		return null;
