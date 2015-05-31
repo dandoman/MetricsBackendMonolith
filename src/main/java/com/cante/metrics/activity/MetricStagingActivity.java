@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cante.metrics.entity.StagedMetricEntity;
 import com.cante.metrics.entity.pojo.StagedMetric;
 import com.cante.metrics.logic.StagedMetricLogic;
 import com.cante.metrics.request.BulkUploadRequest;
@@ -38,8 +39,8 @@ public class MetricStagingActivity {
     
     @RequestMapping(method = RequestMethod.GET, produces = { APPLICATION_JSON })
     @ResponseBody
-    public List<StagedMetric> getStagedMetrics() {
-        List<StagedMetric> metrics = logic.getStagedMetrics();
+    public List<StagedMetricEntity> getStagedMetrics() {
+        List<StagedMetricEntity> metrics = logic.getStagedMetrics();
         return metrics;
     }
 

@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 import com.cante.metrics.dao.StagedMetricDao;
+import com.cante.metrics.entity.StagedMetricEntity;
 import com.cante.metrics.entity.pojo.StagedMetric;
 
 @Log4j
@@ -30,7 +31,7 @@ public class StagedMetricLogic {
 		return failures;
 	}
 
-	public List<StagedMetric> getStagedMetrics() {
+	public List<StagedMetricEntity> getStagedMetrics() {
 		return dao.getAllStagedMetrics();
 	}
 }

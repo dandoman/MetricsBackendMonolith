@@ -30,6 +30,7 @@ public class StagedMetricEntity {
 	private double value;
 	private Date creationDate;
 	private Date lastUpdatedDate;
+	private String lastUpdatedBy;
 	private StagedStatus status;
 	
 	public StagedMetricEntity(StagedMetric m) {

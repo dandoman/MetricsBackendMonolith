@@ -14,6 +14,8 @@ import com.cante.metrics.dao.StagedMetricDao;
 import com.cante.metrics.entity.MetricEntity;
 import com.cante.metrics.entity.StagedMetricEntity;
 import com.cante.metrics.entity.pojo.Metric;
+import com.cante.metrics.entity.pojo.StagedStatus;
+import com.cante.metrics.entity.pojo.TimeLevel;
 import com.cante.metrics.logic.CrunchingLogic;
 import com.cante.metrics.logic.LockManagementLogic;
 
@@ -21,6 +23,8 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
+// TODO Initially can be naive, but the lock manager will need to persist the
+// runtime everytime it runs to resolve state in event of failure
 public class MetricsCruncher {
 	@Setter
 	private String selfHostId;
@@ -43,6 +47,7 @@ public class MetricsCruncher {
 		log.info("Running 5 minute crunching task");
 		List<String> ownerIds = lockLogic
 				.getOwnerIdsForResponsibility(selfHostId);
+		
 
 		Date now = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -54,24 +59,43 @@ public class MetricsCruncher {
 		Date start = cal.getTime();
 
 		for (String id : ownerIds) {
+			log.info("Processing metrics for owner id: " + id);
 			List<StagedMetricEntity> stagedMetrics = stagedDao
-					.getStagedMetricsByOwnerAndRange(id, start, end);
-
+					.getStagedMetricsByOwnerAndRange(id, start, end,StagedStatus.CREATED);
+			
+			log.info(String.format("Found %d staged metrics to process",stagedMetrics.size()));
+			if(stagedMetrics.isEmpty()){
+				continue;
+			}
+			
 			// Aggregate by all subsets of appName, operation,
 			// marketplace,hostname
 			List<List<StagedMetricEntity>> metrics;
 
 			// All,All,All,All,metric,value
-			MetricEntity row = crunchingLogic.computeMetricRow(stagedMetrics,
-					null);
-			metricDao.create(id, row);
+			//Special case since the logic wont aggregate by 0 fields, could add this
+			for(StagedMetricEntity me : stagedMetrics){
+				List<StagedMetricEntity> fakeList = new ArrayList<StagedMetricEntity>();
+				fakeList.add(me);
+				MetricEntity metricRow = crunchingLogic.computeMetricRow(fakeList,
+						fakeList.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setOperation("ALL");
+				metricRow.setMarketplace("ALL");
+				metricRow.setHostName("ALL");
+				metricDao.create(id, metricRow);
+			}
+			
 
 			// App,All,All,All,metric,value
 			metrics = crunchingLogic.aggregate(stagedMetrics, true, false,
 					false, false); // 75%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setOperation("ALL");
+				metricRow.setMarketplace("ALL");
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -80,7 +104,10 @@ public class MetricsCruncher {
 					false, false); // 75%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setMarketplace("ALL");
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -89,7 +116,10 @@ public class MetricsCruncher {
 					true, false); // 75%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setOperation("ALL");
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -98,7 +128,10 @@ public class MetricsCruncher {
 					false, true); // 75%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setOperation("ALL");
+				metricRow.setMarketplace("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -107,7 +140,9 @@ public class MetricsCruncher {
 					false, false); // 50%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setMarketplace("ALL");
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -116,7 +151,9 @@ public class MetricsCruncher {
 					true, false); // 50%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setOperation("ALL");
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -125,7 +162,9 @@ public class MetricsCruncher {
 					false, true); // 50%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setOperation("ALL");
+				metricRow.setMarketplace("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -134,7 +173,9 @@ public class MetricsCruncher {
 					true, false); // 50%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -143,7 +184,9 @@ public class MetricsCruncher {
 					false, true); // 50%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setMarketplace("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -152,7 +195,9 @@ public class MetricsCruncher {
 					true, true); // 50%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
+				metricRow.setOperation("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -161,7 +206,8 @@ public class MetricsCruncher {
 					false); // 25%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setHostName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -170,7 +216,8 @@ public class MetricsCruncher {
 					false, true); // 25%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setMarketplace("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -179,7 +226,8 @@ public class MetricsCruncher {
 					true, true); // 25%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setOperation("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -188,7 +236,8 @@ public class MetricsCruncher {
 					true, true); // 25%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setApplicationName("ALL");
 				metricDao.create(id, metricRow);
 			}
 
@@ -197,12 +246,16 @@ public class MetricsCruncher {
 					true); // 5%
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
-						aggregatedMetrics, null);
+						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricDao.create(id, metricRow);
 			}
 
 			// Total of 800% assuming even distribution, but it wont be that, it
 			// will be less, maybe closer to 500%
+
+			for (StagedMetricEntity entity : stagedMetrics) {
+				stagedDao.setStatus(entity, StagedStatus.PROCESSED_5_MIN);
+			}
 
 		}
 	}
@@ -217,4 +270,5 @@ public class MetricsCruncher {
 		log.info("Running daily crunching task");
 	}
 
+	
 }

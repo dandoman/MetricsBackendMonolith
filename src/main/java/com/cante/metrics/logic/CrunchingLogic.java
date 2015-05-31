@@ -33,29 +33,17 @@ public class CrunchingLogic {
 			if(appName){
 				builder.addValue(m.getApplicationName());
 			}
-			else{
-				m.setApplicationName("ALL");
-			}
 			
 			if(operation){
 				builder.addValue(m.getOperation());
-			}
-			else{
-				m.setOperation("ALL");
 			}
 			
 			if(marketplace){
 				builder.addValue(m.getMarketplace());
 			}
-			else{
-				m.setMarketplace("ALL");
-			}
 			
 			if(hostname){
 				builder.addValue(m.getHostName());
-			}
-			else{
-				m.setHostName("ALL");
 			}
 			
 			Tuple tuple = builder.build();
