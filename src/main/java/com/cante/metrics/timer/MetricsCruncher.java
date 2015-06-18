@@ -48,7 +48,7 @@ public class MetricsCruncher {
 		List<String> ownerIds = lockLogic
 				.getOwnerIdsForResponsibility(selfHostId);
 		
-
+		
 		Date now = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(now);

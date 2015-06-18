@@ -13,7 +13,9 @@
 	<bean id="metricActivity" class="com.cante.metrics.activity.MetricActivity">
 		<property name="metricLogic" ref="metricLogic" />
 	</bean>
-	<bean id="monitorActivity" class="com.cante.metrics.activity.MonitorActivity" />
+	<bean id="monitorActivity" class="com.cante.metrics.activity.MonitorActivity">
+		<property name="logic" ref="monitorLogic"></property>
+	</bean>
 	<bean id="metricStagingActivity" class="com.cante.metrics.activity.MetricStagingActivity">
 		<property name="logic" ref="stagedMetricLogic" />
 	</bean>
