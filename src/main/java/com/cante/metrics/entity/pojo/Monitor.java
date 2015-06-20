@@ -16,4 +16,5 @@ public class Monitor {
 	private Double threshold;
 	private Integer counts;
 	private Boolean less; //Fix later, ugly as fuuckk
+	private String emailRecipient;
 }

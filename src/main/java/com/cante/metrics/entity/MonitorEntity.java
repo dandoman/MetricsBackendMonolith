@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.cante.metrics.entity.pojo.Monitor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,9 +33,19 @@ public class MonitorEntity {
 	private Date lastFired;
 	private int currentBreaches;
 	private Date lastUpdated;
-	private int recordVersionNumber;
 	
 	private String name;
 	private String description;
+	private String emailRecipient;
+	
+	public Monitor getMonitor() {
+		Monitor m = new Monitor();
+		m.setApplicationName(this.applicationName);
+		m.setCounts(this.counts);
+		m.setDescription(this.description);
+		m.setEmailRecipient(this.emailRecipient);
+		
+		return m;
+	}
 	
 }

@@ -10,5 +10,11 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<bean id="emailClient" class="com.cante.metrics.client.impl.EmailClientImpl">
+		<property name="host" value="${email.client.host}" />
+		<property name="password" value="${email.client.password}" />
+		<property name="port" value="${email.client.port}" />
+		<property name="username" value="${email.client.username}" />
+	</bean>
 
 </beans>

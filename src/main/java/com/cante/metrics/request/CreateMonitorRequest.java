@@ -14,4 +14,7 @@ public class CreateMonitorRequest {
 	private Double threshold;
 	private Integer counts;
 	private Boolean less;
+	
+	private String description;
+	private String emailRecipient;
 }

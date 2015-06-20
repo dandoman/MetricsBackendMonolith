@@ -1,18 +1,21 @@
 package com.cante.metrics.logic;
 
+import java.util.List;
+
 import lombok.Setter;
 
 import org.springframework.util.StringUtils;
 
 import com.cante.metrics.dao.MonitorDao;
 import com.cante.metrics.entity.pojo.Monitor;
+import com.cante.metrics.entity.pojo.MonitorSearchParam;
 import com.cante.metrics.exception.BadArgsException;
 
 public class MonitorLogic {
 	
 	@Setter private MonitorDao dao;
 
-	public void createMonitor(Monitor m, String apiKey) {
+	public Monitor createMonitor(Monitor m, String apiKey) {
 		//get owner from api key, if nt found, 400
 		String ownerId = "123123";
 		
@@ -48,7 +51,15 @@ public class MonitorLogic {
 			m.setOperation("ALL");
 		}
 		
-		dao.create(m,ownerId);
+		return dao.create(m,ownerId);
+	}
+
+	public List<Monitor> queryMonitors(MonitorSearchParam p) {
+		if(StringUtils.isEmpty(p.getOwnerId())){
+			throw new BadArgsException("Monitor owner id required for monitor query");
+		}
+		
+		return dao.queryMonitors(p);
 	}
 	
 }
