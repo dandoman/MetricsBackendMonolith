@@ -23,7 +23,13 @@
 	</bean>
 	
 	
-	<bean id="monitorProcessing" class="com.cante.metrics.timer.MonitorProcessor" />
+	<bean id="monitorProcessing" class="com.cante.metrics.timer.MonitorProcessor">
+		<property name="emailClient" ref="emailClient" />
+		<property name="selfHostId" value="${app.name}" />
+		<property name="lockLogic" ref="lockManagementLogic" />
+		<property name="monitorLogic" ref="monitorLogic" />
+		<property name="metricLogic" ref="metricLogic" />
+	</bean>
 
 	<task:scheduled-tasks>
 		<task:scheduled ref="metricsCruncher" method="fiveMinCrunch"
@@ -34,7 +40,7 @@
 			cron="0 0 3 * * *" /> <!-- 3am every day -->
 
 		<task:scheduled ref="monitorProcessing" method="runTask"
-			initial-delay="60000" fixed-rate="300000" />
+			cron="0 */5 * * * *" />
 	</task:scheduled-tasks>
 
 </beans> 

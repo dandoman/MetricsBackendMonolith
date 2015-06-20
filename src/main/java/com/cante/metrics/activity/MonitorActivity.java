@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import com.cante.metrics.response.Response;
 @Log4j
 @Controller
 @RequestMapping(value = "/monitor")
+@Transactional
 public class MonitorActivity {
 	private static final String APPLICATION_JSON = "application/json";
 	@Setter private MonitorLogic logic;
@@ -34,14 +37,14 @@ public class MonitorActivity {
     
     @RequestMapping(method = RequestMethod.POST, produces = { APPLICATION_JSON })
     @ResponseBody
-    public Monitor createMonitor(CreateMonitorRequest r) {
+    public Monitor createMonitor(@RequestBody CreateMonitorRequest r) {
     	Monitor m = new Monitor();
     	m.setApplicationName(r.getApplicationName());
     	m.setHostName(r.getHostName());
     	m.setMarketplace(r.getMarketplace());
     	m.setMetricName(r.getMetricName());
     	m.setOperation(r.getOperation());
-    	m.setType(m.getType());
+    	m.setType(r.getType());
     	m.setCounts(r.getCounts());
     	m.setLess(r.getLess());
     	m.setThreshold(r.getThreshold());

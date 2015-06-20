@@ -26,6 +26,7 @@ public class MonitorDaoImpl implements MonitorDao{
 		me.setApplicationName(m.getApplicationName());
 		me.setCounts(m.getCounts());
 		me.setCurrentBreaches(0);
+		me.setRecordVersionNumber(0);
 		me.setHostName(m.getHostName());
 		me.setLastFired(null);
 		me.setLastUpdated(new Date());
@@ -55,6 +56,27 @@ public class MonitorDaoImpl implements MonitorDao{
 		}
 		
 		return monitors;
+	}
+
+	public void fireMonitor(Monitor m) {
+		MonitorEntity me = (MonitorEntity) sessionFactory.getCurrentSession().get(MonitorEntity.class,m.getId());
+		if(me != null){
+			Date now = new Date();
+			me.setLastFired(now);
+			me.setLastUpdated(now);
+			me.setCounts(me.getCounts() + 1);
+			sessionFactory.getCurrentSession().saveOrUpdate(me);
+		}
+	}
+	
+	public void resetMonitor(Monitor m) {
+		MonitorEntity me = (MonitorEntity) sessionFactory.getCurrentSession().get(MonitorEntity.class,m.getId());
+		if(me != null){
+			Date now = new Date();
+			me.setLastUpdated(now);
+			me.setCounts(0);
+			sessionFactory.getCurrentSession().saveOrUpdate(me);
+		}
 	}
 
 }

@@ -15,7 +15,7 @@ public class LockManagementLogic {
 	
 	public List<String> getOwnerIdsForResponsibility(String appId){
 		List<String> ids = new ArrayList<String>();
-		ids.add("123");
+		ids.add("123123");
 		ids.add("456");
 		ids.add("342efwdfwef");
 		return ids;

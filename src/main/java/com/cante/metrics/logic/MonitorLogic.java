@@ -61,5 +61,13 @@ public class MonitorLogic {
 		
 		return dao.queryMonitors(p);
 	}
+
+	public void fireMonitor(Monitor m) {
+		dao.fireMonitor(m);
+	}
+	
+	public void resetMonitor(Monitor m) {
+		dao.resetMonitor(m);
+	}
 	
 }

@@ -9,5 +9,7 @@ public interface MonitorDao {
 
 	public Monitor create(Monitor m, String ownerId);
 	public List<Monitor> queryMonitors(MonitorSearchParam p);
+	public void fireMonitor(Monitor m);
+	public void resetMonitor(Monitor m);
 
 }

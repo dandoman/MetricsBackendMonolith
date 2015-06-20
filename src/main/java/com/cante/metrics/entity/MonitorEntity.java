@@ -37,6 +37,7 @@ public class MonitorEntity {
 	private String name;
 	private String description;
 	private String emailRecipient;
+	private int recordVersionNumber;
 	
 	public Monitor getMonitor() {
 		Monitor m = new Monitor();
@@ -44,6 +45,15 @@ public class MonitorEntity {
 		m.setCounts(this.counts);
 		m.setDescription(this.description);
 		m.setEmailRecipient(this.emailRecipient);
+		m.setHostName(this.hostName);
+		m.setId(this.id);
+		m.setLess(this.less);
+		m.setMarketplace(this.marketplace);
+		m.setMetricName(this.metricName);
+		m.setName(this.name);
+		m.setOperation(this.operation);
+		m.setThreshold(this.threshold);
+		m.setType(this.type);
 		
 		return m;
 	}
