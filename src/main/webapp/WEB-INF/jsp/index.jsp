@@ -12,29 +12,15 @@ body {
 </style>
 </head>
 <body>
-	<canvas id="myChart" width="600" height="400"></canvas>
+	<canvas id="myChart" width="1000" height="500"></canvas>
 	<script>
 		$(document).ready(function() {
-			$("button").click(function() {
-				$.get("<c:url value="/metric/search?metricName=metric2&applicationName=TestApp" />", function(retdata, status) {
-					var newData = [];
-					var dataLabels = []
-					for	(index = 0; index < retdata.length; index++) {
-						newData.push(retdata[index].sum);
-						dataLabels.push(index);
-					}
-					data.datasets[0].data = newData;
-					data.labels = dataLabels;
-					var newctx = document.getElementById("myChart").getContext("2d");
-					var newLineChart = new Chart(newctx).Line(data);
-				});
-			});
-			
 			$("form").on("submit",function(event) {
 				event.preventDefault();
 				var queryparams = $( this ).serialize();
 				
 				$.get("/MetricsService/metric/search?".concat(queryparams), function(retdata, status) {
+					myLineChart.destroy();
 					var newData = [];
 					var dataLabels = []
 					for	(index = 0; index < retdata.length; index++) {
@@ -43,8 +29,8 @@ body {
 					}
 					data.datasets[0].data = newData;
 					data.labels = dataLabels;
-					var newctx = document.getElementById("myChart").getContext("2d");
-					var newLineChart = new Chart(newctx).Line(data);
+					ctx = document.getElementById("myChart").getContext("2d");
+					myLineChart = new Chart(ctx).Line(data);
 				});
 			});
 		});
@@ -67,14 +53,13 @@ body {
 	</script>
 	<br>
 	<div style="text-align: center">
-		<button>Get actual data</button>
 		<form>
-			<input type="text" name="applicationName">App Name</input> <input
-				type="text" name="operation">Operation</input> <input type="text"
-				name="marketplace">Marketplace</input> <input type="text"
-				name="hostName">Host Name</input> <input type="text"
-				name="metricName">Metric Name</input> <input type="submit"
-				name="submit">Submit</input>
+			App Name: <input type="text" name="applicationName"></input>
+			Operation: <input type="text" name="operation"></input> 
+			Marketplace: <input type="text" name="marketplace"></input> 
+			Host Name: <input type="text" name="hostName"></input> 
+			Metric Name: <input type="text"name="metricName"></input> 
+			<input type="submit"name="submit"></input>
 		</form>
 	</div>
 </body>
