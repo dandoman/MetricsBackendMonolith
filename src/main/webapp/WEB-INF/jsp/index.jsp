@@ -1,5 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+<script src="<c:url value="/resources/js/Chart.js" />"></script>
 <title>Spring MVC Tutorial Series by Crunchify.com</title>
 <style type="text/css">
 body {
@@ -9,7 +11,7 @@ body {
 </head>
 <body>
 	<br>
-	<div style="text-align:center">
+	<div style="text-align: center">
 		<h2>
 			Hey You..!! This is your 1st Spring MCV Tutorial..<br> <br>
 		</h2>
