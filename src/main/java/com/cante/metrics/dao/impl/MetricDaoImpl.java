@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.util.StringUtils;
 
 import com.cante.metrics.dao.MetricDao;
 import com.cante.metrics.entity.MetricEntity;
@@ -38,19 +39,19 @@ public class MetricDaoImpl implements MetricDao {
 
 	public List<Metric> search(SearchParameters sp) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(MetricEntity.class);
-		if(sp.getApplicationName() != null) {
+		if(!StringUtils.isEmpty(sp.getApplicationName())) {
 			c.add(Restrictions.eq("applicationName", sp.getApplicationName()));
 		}
-		if(sp.getHostName() != null) {
+		if(!StringUtils.isEmpty(sp.getHostName())) {
 			c.add(Restrictions.eq("hostName", sp.getHostName()));
 		}
-		if(sp.getMarketplace() != null) {
+		if(!StringUtils.isEmpty(sp.getMarketplace())) {
 			c.add(Restrictions.eq("marketplace", sp.getMarketplace()));
 		}
-		if(sp.getOperation() != null) {
+		if(!StringUtils.isEmpty(sp.getOperation())) {
 			c.add(Restrictions.eq("operation", sp.getOperation()));
 		}
-		if(sp.getMetricName() != null) {
+		if(!StringUtils.isEmpty(sp.getMetricName())) {
 			c.add(Restrictions.eq("metricName", sp.getMetricName()));
 		}
 		if(sp.getStartTime() != null) {

@@ -21,7 +21,25 @@ body {
 					var dataLabels = []
 					for	(index = 0; index < retdata.length; index++) {
 						newData.push(retdata[index].sum);
-						dataLabels.push(retdata[index].timestamp);
+						dataLabels.push(index);
+					}
+					data.datasets[0].data = newData;
+					data.labels = dataLabels;
+					var newctx = document.getElementById("myChart").getContext("2d");
+					var newLineChart = new Chart(newctx).Line(data);
+				});
+			});
+			
+			$("form").on("submit",function(event) {
+				event.preventDefault();
+				var queryparams = $( this ).serialize();
+				
+				$.get("/MetricsService/metric/search?".concat(queryparams), function(retdata, status) {
+					var newData = [];
+					var dataLabels = []
+					for	(index = 0; index < retdata.length; index++) {
+						newData.push(retdata[index].sum);
+						dataLabels.push(index);
 					}
 					data.datasets[0].data = newData;
 					data.labels = dataLabels;
@@ -30,9 +48,8 @@ body {
 				});
 			});
 		});
-		
 		var data = {
-			labels: ["Data"],
+			labels: [],
 			datasets : [ {
 				label : "My dataset",
 				fillColor : "rgba(151,187,205,0.2)",
@@ -41,7 +58,7 @@ body {
 				pointStrokeColor : "#fff",
 				pointHighlightFill : "#fff",
 				pointHighlightStroke : "rgba(151,187,205,1)",
-				data : [ 28, 48, 40, 19, 86, 27, 90 ]
+				data : []
 			} ]
 		};
 
@@ -50,14 +67,15 @@ body {
 	</script>
 	<br>
 	<div style="text-align: center">
-		<h2>
-			Hey You..!! This is your 1st Spring MCV Tutorial..<br> <br>
-		</h2>
-		<h3>
-			<a href="welcome.html">Click here to See Welcome Message... </a>(to
-			check Spring MVC Controller... @RequestMapping("/welcome"))
-		</h3>
 		<button>Get actual data</button>
+		<form>
+			<input type="text" name="applicationName">App Name</input> <input
+				type="text" name="operation">Operation</input> <input type="text"
+				name="marketplace">Marketplace</input> <input type="text"
+				name="hostName">Host Name</input> <input type="text"
+				name="metricName">Metric Name</input> <input type="submit"
+				name="submit">Submit</input>
+		</form>
 	</div>
 </body>
 </html>
