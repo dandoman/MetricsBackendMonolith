@@ -44,6 +44,7 @@ public class MetricsCruncher {
 
 	@Transactional
 	public void fiveMinCrunch() {
+		
 		log.info("Running 5 minute crunching task");
 		List<String> ownerIds = lockLogic
 				.getOwnerIdsForResponsibility(selfHostId);
@@ -57,6 +58,12 @@ public class MetricsCruncher {
 		cal.setTime(now);
 		cal.add(Calendar.MINUTE, -15);
 		Date start = cal.getTime();
+		
+		cal.setTime(now);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND,0);
+		Date timeStamp = cal.getTime();
+		
 
 		for (String id : ownerIds) {
 			log.info("Processing metrics for owner id: " + id);
@@ -82,6 +89,8 @@ public class MetricsCruncher {
 				metricRow.setOperation("ALL");
 				metricRow.setMarketplace("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 			
@@ -95,6 +104,8 @@ public class MetricsCruncher {
 				metricRow.setOperation("ALL");
 				metricRow.setMarketplace("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -107,6 +118,8 @@ public class MetricsCruncher {
 				metricRow.setApplicationName("ALL");
 				metricRow.setMarketplace("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -119,6 +132,8 @@ public class MetricsCruncher {
 				metricRow.setApplicationName("ALL");
 				metricRow.setOperation("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -131,6 +146,8 @@ public class MetricsCruncher {
 				metricRow.setApplicationName("ALL");
 				metricRow.setOperation("ALL");
 				metricRow.setMarketplace("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -142,6 +159,8 @@ public class MetricsCruncher {
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setMarketplace("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -153,6 +172,8 @@ public class MetricsCruncher {
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setOperation("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -164,6 +185,8 @@ public class MetricsCruncher {
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setOperation("ALL");
 				metricRow.setMarketplace("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -175,6 +198,8 @@ public class MetricsCruncher {
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setApplicationName("ALL");
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -186,6 +211,8 @@ public class MetricsCruncher {
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setApplicationName("ALL");
 				metricRow.setMarketplace("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -197,6 +224,8 @@ public class MetricsCruncher {
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setApplicationName("ALL");
 				metricRow.setOperation("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -207,6 +236,8 @@ public class MetricsCruncher {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setHostName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -217,6 +248,8 @@ public class MetricsCruncher {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setMarketplace("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -227,6 +260,8 @@ public class MetricsCruncher {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setOperation("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -237,6 +272,8 @@ public class MetricsCruncher {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
 						aggregatedMetrics, aggregatedMetrics.get(0));
 				metricRow.setApplicationName("ALL");
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
@@ -246,6 +283,8 @@ public class MetricsCruncher {
 			for (List<StagedMetricEntity> aggregatedMetrics : metrics) {
 				MetricEntity metricRow = crunchingLogic.computeMetricRow(
 						aggregatedMetrics, aggregatedMetrics.get(0));
+				metricRow.setTimeStamp(timeStamp.getTime());
+				metricRow.setTimeLevel(TimeLevel.FIVE_MINUTES);
 				metricDao.create(id, metricRow);
 			}
 
