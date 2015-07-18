@@ -1,9 +1,9 @@
-package com.groupon.cns.activity;
+package com.cante.metrics.logic;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class CustomerNotificationActivityTest {
+public class PlaceHolderLogicTest {
 
     @Before
     public void before() {

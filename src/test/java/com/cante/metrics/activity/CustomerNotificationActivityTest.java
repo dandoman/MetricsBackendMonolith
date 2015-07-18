@@ -1,9 +1,9 @@
-package com.groupon.cns.dao;
+package com.cante.metrics.activity;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class PlaceHolderDaoTest {
+public class CustomerNotificationActivityTest {
 
     @Before
     public void before() {

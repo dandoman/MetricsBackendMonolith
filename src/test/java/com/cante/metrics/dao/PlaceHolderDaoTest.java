@@ -1,9 +1,9 @@
-package com.groupon.cns.logic;
+package com.cante.metrics.dao;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class PlaceHolderLogicTest {
+public class PlaceHolderDaoTest {
 
     @Before
     public void before() {
