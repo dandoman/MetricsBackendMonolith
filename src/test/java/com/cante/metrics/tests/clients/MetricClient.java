@@ -1,7 +1,10 @@
 package com.cante.metrics.tests.clients;
 
+import java.net.InetAddress;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -21,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 
 public class MetricClient {
-	private static final String BASE_URL = "";
 
 	@Setter
 	private HttpClient client;
@@ -34,7 +36,8 @@ public class MetricClient {
 	}
 
 	public int createMetric(StagedMetric metric) {
-		HttpPost post = new HttpPost(BASE_URL + "");
+		URIBuilder builder = new URIBuilder();
+		builder.setScheme("http").setHost("ec2-52-24-132-32.us-west-2.compute.amazonaws.com").setPort(8080).setPath("/MetricsService/processing/upload");
 		BulkUploadRequest req = new BulkUploadRequest();
 		List<StagedMetric> metrics = new ArrayList<StagedMetric>();
 		metrics.add(metric);
@@ -42,6 +45,8 @@ public class MetricClient {
 		req.setMetrics(metrics);
 		
 		try {
+			HttpPost post = new HttpPost(builder.build());
+			post.setHeader("Content-Type", "application/json");
 			post.setEntity(EntityBuilder.create()
 					.setBinary(mapper.writeValueAsBytes(req)).build());
 			HttpResponse r = client.execute(post);
@@ -71,9 +76,18 @@ public class MetricClient {
 		
 	}
 	
-	public static void main(String [] args){
+	public static void main(String [] args) throws Exception{
 		MetricClient client = new MetricClient();
 		client.init();
-		System.out.println(client.getMetricByNameAndApp("metric2", "TestApp"));
+		StagedMetric newMetric = new StagedMetric();
+		newMetric.setApplicationName("FunctionalTest");
+		newMetric.setEndTime(new Date().getTime());
+		newMetric.setStartTime(new Date().getTime());
+		newMetric.setHostName(InetAddress.getLocalHost().getHostName());
+		newMetric.setMarketplace("pokemon");
+		newMetric.setOperation("testyMcTest");
+		newMetric.setValue(100);
+		System.out.println("Status code for create: " + client.createMetric(newMetric));
+		System.out.println(client.getMetricByNameAndApp("mahMetric", "FunctionalTest"));
 	}
 }
