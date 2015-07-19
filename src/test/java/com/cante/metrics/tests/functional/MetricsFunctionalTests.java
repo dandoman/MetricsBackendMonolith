@@ -90,7 +90,7 @@ public class MetricsFunctionalTests {
 		for (Metric metric : metrics) {
 			if(occurredWithinLast15Mins(metric)){
 				assertTrue(Double.compare(metric.getAvg(), 15.0) == 0);
-			}
+ 			}
 		}
 	}
 	
