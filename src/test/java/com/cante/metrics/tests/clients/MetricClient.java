@@ -63,7 +63,6 @@ public class MetricClient {
 	    
 		try {
 			HttpGet get = new HttpGet(builder.build());
-			System.out.println("Query: " + get.getURI().getQuery());
 			HttpResponse response = client.execute(get);
 			List<Metric> returnMetrics = mapper.readValue(
 					response.getEntity().getContent(),
