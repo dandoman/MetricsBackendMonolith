@@ -91,8 +91,8 @@ public class MonitorProcessor {
 		if(metrics.size() == 0){
 			if(m.getLess()){
 				fireMonitor(m);
-				return;
 			}
+			return;
 		}
 		
 		Metric metric = metrics.get(0);
