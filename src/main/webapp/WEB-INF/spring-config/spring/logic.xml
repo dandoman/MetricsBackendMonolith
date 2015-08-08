@@ -15,6 +15,10 @@
 	</bean>
 	<bean id="crunchingLogic" class="com.cante.metrics.logic.CrunchingLogic" />
 	<bean id="lockManagementLogic" class="com.cante.metrics.logic.LockManagementLogic" />
+	<bean id="customerLogic" class="com.cante.metrics.logic.CustomerLogic">
+		<property name="customerDao" ref="customerDao" />
+	</bean>
+	
 	<bean id="monitorLogic" class="com.cante.metrics.logic.MonitorLogic">
 		<property name="dao" ref="monitorDao" />
 	</bean>

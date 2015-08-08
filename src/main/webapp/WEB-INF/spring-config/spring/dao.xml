@@ -19,6 +19,9 @@
 	<bean id="monitorDao" class="com.cante.metrics.dao.impl.MonitorDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<bean id="customerDao" class="com.cante.metrics.dao.impl.CustomerDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">

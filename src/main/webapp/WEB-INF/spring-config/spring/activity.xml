@@ -19,6 +19,10 @@
 	<bean id="metricStagingActivity" class="com.cante.metrics.activity.MetricStagingActivity">
 		<property name="logic" ref="stagedMetricLogic" />
 	</bean>
+	
+	<bean id="customerActivity" class="com.cante.metrics.activity.CustomerActivity">
+		<property name="customerLogic" ref="customerLogic" />
+	</bean>
 
 	<bean id="exceptionHandler" class="com.cante.metrics.exception.handler.TopLevelHandler" />
 </beans>
