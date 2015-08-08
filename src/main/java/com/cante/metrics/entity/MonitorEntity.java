@@ -53,7 +53,8 @@ public class MonitorEntity {
 		m.setName(this.name);
 		m.setOperation(this.operation);
 		m.setThreshold(this.threshold);
-		m.setType(this.type);
+		m.setType(this.type); 
+		m.setCurrentBreaches(this.currentBreaches);
 		
 		return m;
 	}

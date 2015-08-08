@@ -70,8 +70,9 @@ public class AlertsFunctionalTests {
 					+ res);
 		}
 		
-		System.out.println("Waiting for metric crunching and alert processing");
+		System.out.println(new Date() + " Waiting for metric crunching and alert processing");
 		Thread.sleep(FIFTEEN_MINS_IN_MILLIS);
+		System.out.println(new Date() + " Finished waiting for metric crunching");
 		
 		assertTrue(testEmailClient.areThereNewMessages());
 		

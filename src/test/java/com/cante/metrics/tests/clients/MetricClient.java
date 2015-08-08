@@ -58,6 +58,7 @@ public class MetricClient {
 			post.setEntity(EntityBuilder.create()
 					.setBinary(mapper.writeValueAsBytes(req)).build());
 			HttpResponse r = client.execute(post);
+			System.out.println("Created metric: " + metric.toString());
 			return r.getStatusLine().getStatusCode();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
