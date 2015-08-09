@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class BulkUploadRequest extends Request {
+public class BulkUploadRequest {
+	private String apiKey;
 	private List<StagedMetric> metrics;
 }

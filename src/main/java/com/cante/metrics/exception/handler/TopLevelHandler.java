@@ -22,7 +22,7 @@ public class TopLevelHandler extends ResponseEntityExceptionHandler {
 			WebRequest request) {
 		log.error("Internal server error", e);
 		ErrorResource error = new ErrorResource();
-		error.setMessage("Server error");
+		error.setMessage("Server error: " + e.getMessage());
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);

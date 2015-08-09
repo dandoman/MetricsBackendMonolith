@@ -30,14 +30,14 @@ public class CustomerActivity {
 	
 	@RequestMapping(method = RequestMethod.GET, produces = { APPLICATION_JSON })
     @ResponseBody
-    public void queryCustomers(@RequestParam String ownerId) {
-    	
+    public List<Customer> queryCustomers(@RequestParam String ownerId) {
+    	return null;
     }
     
     @RequestMapping(method = RequestMethod.POST, produces = { APPLICATION_JSON })
     @ResponseBody
     public Customer createCustomer(@RequestBody CreateCustomerRequest r) {
-    	return null;
+    	return customerLogic.createCustomer(r); //Badsauce, shouldn't pass in request to next level
     }
 		
 }

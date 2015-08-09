@@ -55,8 +55,6 @@ public class MonitorEntity {
 		m.setThreshold(this.threshold);
 		m.setType(this.type); 
 		m.setCurrentBreaches(this.currentBreaches);
-		
 		return m;
 	}
-	
 }

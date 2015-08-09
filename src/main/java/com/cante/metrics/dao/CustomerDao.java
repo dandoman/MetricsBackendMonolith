@@ -1,5 +1,8 @@
 package com.cante.metrics.dao;
 
-public interface CustomerDao {
+import com.cante.metrics.entity.CustomerEntity;
+import com.cante.metrics.entity.pojo.Customer;
 
+public interface CustomerDao {
+	public Customer create(CustomerEntity c);
 }
