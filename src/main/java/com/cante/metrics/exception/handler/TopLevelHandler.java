@@ -12,6 +12,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.cante.metrics.exception.BadArgsException;
+import com.cante.metrics.exception.NotAuthorizedException;
+import com.cante.metrics.exception.NotFoundException;
 
 @ControllerAdvice
 @Log4j
@@ -35,7 +37,7 @@ public class TopLevelHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> catchBadRequestHandler(RuntimeException e,
 			WebRequest request) {
 		BadArgsException ba = (BadArgsException) e;
-		log.error("Internal server error", e);
+		log.error(ba);
 		ErrorResource error = new ErrorResource();
 		error.setMessage(ba.getMessage());
 
@@ -44,5 +46,35 @@ public class TopLevelHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(e, error, headers,
 				HttpStatus.BAD_REQUEST, request);
+	}
+	
+	@ExceptionHandler({ NotFoundException.class })
+	protected ResponseEntity<Object> catchNotFoundHandler(RuntimeException e,
+			WebRequest request) {
+		NotFoundException nfe = (NotFoundException) e;
+		log.error(nfe);
+		ErrorResource error = new ErrorResource();
+		error.setMessage(nfe.getMessage());
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		return handleExceptionInternal(e, error, headers,
+				HttpStatus.NOT_FOUND, request);
+	}
+	
+	@ExceptionHandler({ NotAuthorizedException.class })
+	protected ResponseEntity<Object> catchNotAuthorizedHandler(RuntimeException e,
+			WebRequest request) {
+		NotAuthorizedException nae = (NotAuthorizedException) e;
+		log.error(nae);
+		ErrorResource error = new ErrorResource();
+		error.setMessage(nae.getMessage());
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		return handleExceptionInternal(e, error, headers,
+				HttpStatus.UNAUTHORIZED, request);
 	}
 }

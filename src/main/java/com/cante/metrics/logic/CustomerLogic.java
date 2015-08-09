@@ -16,6 +16,7 @@ import com.cante.metrics.dao.CustomerDao;
 import com.cante.metrics.entity.CustomerEntity;
 import com.cante.metrics.entity.pojo.Customer;
 import com.cante.metrics.exception.BadArgsException;
+import com.cante.metrics.exception.NotAuthorizedException;
 import com.cante.metrics.request.CreateCustomerRequest;
 
 import lombok.Setter;
@@ -25,6 +26,7 @@ import lombok.extern.log4j.Log4j;
 public class CustomerLogic {
 	@Setter
 	private CustomerDao customerDao;
+	//lol @ keeping the key here, doesn't matter, won't actually be using it in the end
 	private static final String ENCRYPTION_KEY_PASSPHRASE = "acdd21d8-1352-4149-a0c6-945a73de4336";
 	private SecretKeySpec ENCRYPTION_KEY = null;
 
@@ -69,7 +71,7 @@ public class CustomerLogic {
 		}
 	}
 
-	public String decrypt(String creditCardEncryptedHex) {
+	private String decrypt(String creditCardEncryptedHex) {
 		if (ENCRYPTION_KEY == null) {
 			initKey();
 		}
@@ -84,7 +86,7 @@ public class CustomerLogic {
 		}
 	}
 
-	public String encrypt(String creditCardNumber) {
+	private String encrypt(String creditCardNumber) {
 		if (ENCRYPTION_KEY == null) {
 			initKey();
 		}
@@ -141,5 +143,16 @@ public class CustomerLogic {
 			}
 		}
 		return creditCardNumber.substring(12, 16);
+	}
+
+	public Customer login(String email, String password) {
+		CustomerEntity c = customerDao.getUserForEmailLogin(email);
+		String processedPassword = hash(password + c.getPasswordSalt());
+		if(c.getPasswordHash().equals(processedPassword)){
+			return c.toCustomer();
+		}
+		else{
+			throw new NotAuthorizedException("Invalid email or password");
+		}
 	}
 }

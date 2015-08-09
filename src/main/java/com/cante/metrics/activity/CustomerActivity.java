@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cante.metrics.entity.pojo.Customer;
 import com.cante.metrics.logic.CustomerLogic;
 import com.cante.metrics.request.CreateCustomerRequest;
+import com.cante.metrics.request.LoginRequest;
 
 @Log4j
 @Controller
@@ -28,10 +29,10 @@ public class CustomerActivity {
 	private static final String APPLICATION_JSON = "application/json";
 	@Setter private CustomerLogic customerLogic;
 	
-	@RequestMapping(method = RequestMethod.GET, produces = { APPLICATION_JSON })
+	@RequestMapping(method = RequestMethod.POST, value = "/login", produces = { APPLICATION_JSON })
     @ResponseBody
-    public List<Customer> queryCustomers(@RequestParam String ownerId) {
-    	return null;
+    public Customer login(@RequestBody LoginRequest r) {
+    	return customerLogic.login(r.getEmail(),r.getPassword());
     }
     
     @RequestMapping(method = RequestMethod.POST, produces = { APPLICATION_JSON })

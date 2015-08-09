@@ -2,16 +2,17 @@ package com.cante.metrics.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.cante.metrics.entity.pojo.AccountType;
 import com.cante.metrics.entity.pojo.Customer;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Entity
@@ -23,7 +24,7 @@ public class CustomerEntity {
 	private String organizationAddress;
 	private String contactName;
 	private String contactPhoneNumber;
-	private String contactEmail;
+	@Column(unique = true) private String contactEmail;
 	private String passwordHash;
 	private String passwordSalt;
 	private String apiKey;
@@ -38,7 +39,12 @@ public class CustomerEntity {
 	private int expiryMonth;
 	private int expiryYear;
 	private int cvsCode;
+	
+	//We wont actually store this for real
+	//We'll use some 3rd party tokenization service or whatever the standard practice is
+	//I wrote this bit for fun
 	private String cardNumberEncrypted;
+	
 	private String last4Digits;
 	
 	public Customer toCustomer(){
