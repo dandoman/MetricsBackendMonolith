@@ -27,7 +27,7 @@ public class CustomerEntity {
 	@Column(unique = true) private String contactEmail;
 	private String passwordHash;
 	private String passwordSalt;
-	private String apiKey;
+	@Column(unique = true) private String apiKey;
 	private AccountType accountType;
 	private Date creationDate;
 	private Date lastUpdatedDate;
@@ -38,7 +38,7 @@ public class CustomerEntity {
 	private String billingAddress;
 	private int expiryMonth;
 	private int expiryYear;
-	private int cvsCode;
+	private int cvvCode;
 	
 	//We wont actually store this for real
 	//We'll use some 3rd party tokenization service or whatever the standard practice is
@@ -56,7 +56,7 @@ public class CustomerEntity {
 		c.setContactEmail(this.contactEmail);
 		c.setContactName(this.contactName);
 		c.setContactPhoneNumber(this.contactPhoneNumber);
-		c.setCvsCode(this.cvsCode);
+		c.setCvvCode(this.cvvCode);
 		c.setExpiryMonth(this.expiryMonth);
 		c.setExpiryYear(this.expiryYear);
 		c.setId(this.id);

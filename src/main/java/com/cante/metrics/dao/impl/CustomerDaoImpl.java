@@ -42,4 +42,17 @@ public class CustomerDaoImpl implements CustomerDao {
 		}
 		return customer;
 	}
+	
+	@Override
+	public boolean isValidKey(String apiKey) {
+		Criteria c = sessionFactory.getCurrentSession().createCriteria(
+				CustomerEntity.class);
+		c.add(Restrictions.eq("apiKey", apiKey));
+		CustomerEntity customer = (CustomerEntity) c.uniqueResult();
+		if(customer == null){
+			return false;
+		}
+		return true;
+	}
+	
 }

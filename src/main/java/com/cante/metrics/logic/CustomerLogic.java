@@ -40,6 +40,7 @@ public class CustomerLogic {
 		c.setBillingName(r.getBillingName());
 		c.setContactEmail(r.getContactEmail());
 		c.setContactName(r.getContactName());
+		c.setContactPhoneNumber(r.getContactPhoneNumber());
 		c.setOrganizationAddress(r.getOrganizationAddress());
 		c.setOrganizationName(r.getOrganizationName());
 
@@ -49,7 +50,7 @@ public class CustomerLogic {
 				r.getExpiryYear());
 		String encryptedCardNo = encrypt(r.getCreditCardNumber());
 		c.setCardNumberEncrypted(encryptedCardNo);
-		c.setCvsCode(r.getCvsCode());
+		c.setCvvCode(r.getCvsCode());
 		c.setExpiryMonth(r.getExpiryMonth());
 		c.setExpiryYear(r.getExpiryYear());
 		c.setLast4Digits(last4Digits);

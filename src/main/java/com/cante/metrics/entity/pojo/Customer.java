@@ -20,6 +20,6 @@ public class Customer {
 	private String billingAddress;
 	private int expiryMonth;
 	private int expiryYear;
-	private int cvsCode;
+	private int cvvCode;
 	private String last4Digits;
 }
