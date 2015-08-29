@@ -9,5 +9,5 @@ import com.cante.metrics.entity.pojo.SearchParameters;
 public interface MetricDao {
 	public void create(String ownerId, MetricEntity m);
 	public List<Metric> getAllMetrics();
-	public List<Metric> search(SearchParameters sp);
+	public List<Metric> search(SearchParameters sp, String customerId);
 }

@@ -15,10 +15,7 @@ public class MonitorLogic {
 	
 	@Setter private MonitorDao dao;
 
-	public Monitor createMonitor(Monitor m, String apiKey) {
-		//get owner from api key, if nt found, 400
-		String ownerId = "123123";
-		
+	public Monitor createMonitor(Monitor m, String ownerId) {
 		if(StringUtils.isEmpty(m.getMetricName())){
 			throw new BadArgsException("Must specify a metric name");
 		}

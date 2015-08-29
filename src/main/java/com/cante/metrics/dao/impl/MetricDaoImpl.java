@@ -37,7 +37,7 @@ public class MetricDaoImpl implements MetricDao {
 		return metrics;
 	}
 
-	public List<Metric> search(SearchParameters sp) {
+	public List<Metric> search(SearchParameters sp, String customerId) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(MetricEntity.class);
 		if(!StringUtils.isEmpty(sp.getApplicationName())) {
 			c.add(Restrictions.eq("applicationName", sp.getApplicationName()));
@@ -60,6 +60,8 @@ public class MetricDaoImpl implements MetricDao {
 		if(sp.getEndTime() != null) {
 			c.add(Restrictions.le("timeStamp", sp.getEndTime()));
 		}
+		c.add(Restrictions.eq("ownerId", customerId));
+		
 		List<MetricEntity> result = c.list();
 		if(result == null){
 			return new ArrayList<Metric>();

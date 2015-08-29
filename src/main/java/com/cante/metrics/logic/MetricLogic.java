@@ -18,13 +18,13 @@ public class MetricLogic {
 
 	}
 
-	public List<Metric> search(SearchParameters sp) {
+	public List<Metric> search(SearchParameters sp, String customerId) {
 		if (sp.getApplicationName() == null && sp.getHostName() == null
 				&& sp.getMarketplace() == null && sp.getMetricName() == null
 				&& sp.getStartTime() == null && sp.getEndTime() == null
 				&& sp.getOperation() == null) {
 			return new ArrayList<Metric>();
 		}
-		return metricDao.search(sp);
+		return metricDao.search(sp,customerId);
 	}
 }

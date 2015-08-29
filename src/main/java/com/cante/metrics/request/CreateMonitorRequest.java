@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CreateMonitorRequest {
-	private String apiKey;
+	private String customerId;
 	private String applicationName;
 	private String operation;
 	private String marketplace;

@@ -41,7 +41,8 @@ public class MetricActivity {
 			@RequestParam(required = false) String marketplace,
 			@RequestParam(required = false) String metricName,
 			@RequestParam(required = false) Long startTime,
-			@RequestParam(required = false) Long endTime) {
+			@RequestParam(required = false) Long endTime,
+			@RequestParam(required = true) String customerId) {
 		SearchParameters sp = new SearchParameters();
 		sp.setApplicationName(applicationName);
 		sp.setHostName(hostName);
@@ -50,6 +51,6 @@ public class MetricActivity {
 		sp.setMetricName(metricName);
 		sp.setStartTime(startTime);
 		sp.setEndTime(endTime);
-		return metricLogic.search(sp);
+		return metricLogic.search(sp, customerId);
 	}
 }

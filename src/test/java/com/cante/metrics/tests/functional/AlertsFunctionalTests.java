@@ -36,7 +36,7 @@ public class AlertsFunctionalTests {
 		StagedMetric m3 = createMetric(metricName, BASE_APP_NAME, 18);
 		
 		CreateMonitorRequest r = new CreateMonitorRequest();
-		r.setApiKey("disAPI");
+		r.setCustomerId("disAPI");
 		r.setApplicationName(m1.getApplicationName());
 		r.setCounts(1);
 		r.setDescription("OH MAH GAWD, AN ALARM");

@@ -51,7 +51,7 @@ public class MonitorActivity {
     	m.setEmailRecipient(r.getEmailRecipient());
     	m.setDescription(r.getDescription());
     	
-    	Monitor created = logic.createMonitor(m,r.getApiKey());
+    	Monitor created = logic.createMonitor(m,r.getCustomerId());
     	
     	return created;
     }

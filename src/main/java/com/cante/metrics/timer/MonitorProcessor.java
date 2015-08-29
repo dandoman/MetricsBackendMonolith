@@ -43,18 +43,18 @@ public class MonitorProcessor {
 			MonitorSearchParam p = new MonitorSearchParam();
 			p.setOwnerId(id);
 			List<Monitor> monitors = monitorLogic.queryMonitors(p);
-			processMonitors(monitors);
+			processMonitors(monitors,id);
 		}
 		
 	}
 
-	private void processMonitors(List<Monitor> monitors) {
+	private void processMonitors(List<Monitor> monitors, String ownerId) {
 		for(Monitor m : monitors){
-			checkMonitor(m);
+			checkMonitor(m,ownerId);
 		}
 	}
 
-	private void checkMonitor(Monitor m) {
+	private void checkMonitor(Monitor m, String ownerId) {
 		Date now = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(now);
@@ -72,7 +72,7 @@ public class MonitorProcessor {
 		p.setMetricName(m.getMetricName());
 		p.setStartTime(start.getTime());
 		p.setEndTime(end.getTime());
-		List<Metric> metrics = metricLogic.search(p);
+		List<Metric> metrics = metricLogic.search(p,ownerId);
 		if(metrics.size() > 1){
 			log.warn("Metrics list size > 1, potential problems");
 		}

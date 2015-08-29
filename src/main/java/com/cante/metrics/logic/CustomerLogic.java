@@ -156,4 +156,8 @@ public class CustomerLogic {
 			throw new NotAuthorizedException("Invalid email or password");
 		}
 	}
+	
+	public boolean isValidAPIKey(String apiKey) {
+		return customerDao.isValidKey(apiKey);
+	}
 }
