@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import com.cante.metrics.dao.MetricDao;
 import com.cante.metrics.entity.pojo.Metric;
+import com.cante.metrics.entity.pojo.MetricHeader;
 import com.cante.metrics.entity.pojo.SearchParameters;
+import com.cante.metrics.response.MetricParamsResponse;
 
 public class MetricLogic {
 	@Setter
@@ -26,5 +28,11 @@ public class MetricLogic {
 			return new ArrayList<Metric>();
 		}
 		return metricDao.search(sp,customerId);
+	}
+
+	public List<MetricHeader> getSearchparamsFor(String param, String customerId, long startTime, long endTime) {
+		param = param.trim();
+		customerId = customerId.trim();
+		return metricDao.getMetricHeaders(param, customerId, startTime, endTime);
 	}
 }

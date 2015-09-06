@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cante.metrics.entity.pojo.Metric;
+import com.cante.metrics.entity.pojo.MetricHeader;
 import com.cante.metrics.entity.pojo.SearchParameters;
 import com.cante.metrics.logic.MetricLogic;
+import com.cante.metrics.response.MetricParamsResponse;
 import com.cante.metrics.response.Response;
 
 @Log4j
@@ -52,5 +55,24 @@ public class MetricActivity {
 		sp.setStartTime(startTime);
 		sp.setEndTime(endTime);
 		return metricLogic.search(sp, customerId);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = { APPLICATION_JSON }, value = "/searchParams")
+	@ResponseBody
+	public List<MetricHeader> searchForParams(
+			@RequestParam(required = true) String param,
+			@RequestParam(required = true) String customerId,
+			@RequestParam(required = false) Long startTime,
+			@RequestParam(required = false) Long endTime) {
+		
+		if(startTime == null){
+			startTime = DateTime.now().minusDays(3).getMillis();
+		}
+		
+		if(endTime == null){
+			endTime = DateTime.now().getMillis();
+		}
+		
+		return metricLogic.getSearchparamsFor(param, customerId, startTime, endTime);
 	}
 }
