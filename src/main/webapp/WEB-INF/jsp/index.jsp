@@ -19,7 +19,7 @@ body {
 				event.preventDefault();
 				var queryparams = $( this ).serialize();
 				
-				$.get("/MetricsService/metric/search?".concat(queryparams), function(retdata, status) {
+				$.get("/MetricsService/metric/search?customerId=342efwdfwef&".concat(queryparams), function(retdata, status) {
 					myLineChart.destroy();
 					var newData = [];
 					var dataLabels = []
