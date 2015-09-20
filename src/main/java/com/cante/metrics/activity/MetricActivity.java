@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
+
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -47,7 +49,14 @@ public class MetricActivity {
 			@RequestParam(required = false) String metricName,
 			@RequestParam(required = false) Long startTime,
 			@RequestParam(required = false) Long endTime,
-			@RequestParam(required = true) String customerId) {
+			@RequestParam(required = true) String customerId, HttpServletResponse response) {
+		
+		
+		response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
+		
 		SearchParameters sp = new SearchParameters();
 		sp.setApplicationName(applicationName);
 		sp.setHostName(hostName);
@@ -65,7 +74,12 @@ public class MetricActivity {
 			@RequestParam(required = true) String param,
 			@RequestParam(required = true) String customerId,
 			@RequestParam(required = false) Long startTime,
-			@RequestParam(required = false) Long endTime) {
+			@RequestParam(required = false) Long endTime, HttpServletResponse response) {
+		
+		response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
 
 		if (startTime == null) {
 			startTime = DateTime.now().minusDays(3).getMillis();
