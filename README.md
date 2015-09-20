@@ -13,6 +13,10 @@ sudo cp ~/Metricservice.war /usr/share/tomcat7/webapps/
 sudo chown ec2-user /usr/share/tomcat7/webapps/MetricsService.war
 sudo rm -rf /usr/share/tomcat7/webapps/MetricsService
 
-Connect to db with psql
+*Connect to db with psql
 
 psql -d integ -U integ -h integ.cezc1rn98646.us-west-2.rds.amazonaws.com -W
+
+
+
+*Run metric creator: mvn exec:java -Dexec.mainClass="com.cante.metrics.scripts.MetricCreator"

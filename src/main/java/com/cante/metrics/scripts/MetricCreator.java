@@ -61,10 +61,14 @@ public class MetricCreator {
 			noIterations = 1000;
 		}
 
+		List<StagedMetric> metrics = new ArrayList<StagedMetric>();
+		
 		for(int i = 0; i < noIterations; i++){
 			StagedMetric metric = buildMetric(input, Math.abs(random.nextInt(5000)));
-			sendMetric(metric);
+			metrics.add(metric);
 		}
+		
+		sendMetrics(metrics);
 	}
 	
 	private static StagedMetric buildMetric(String name, int value){
@@ -80,9 +84,7 @@ public class MetricCreator {
 		
 		return metric;
 	}
-	private static void sendMetric(StagedMetric metric) throws Exception{
-		List<StagedMetric> metrics = new ArrayList<StagedMetric>();
-		metrics.add(metric);
+	private static void sendMetrics(List<StagedMetric> metrics) throws Exception{
 		BulkUploadRequest request = new BulkUploadRequest();
 		request.setApiKey(API_KEY);
 		request.setMetrics(metrics);
