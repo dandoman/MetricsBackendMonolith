@@ -3,6 +3,7 @@ package com.cante.metrics.activity;
 import java.util.List;
 
 import javax.persistence.QueryHint;
+import javax.servlet.http.HttpServletResponse;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -31,7 +32,12 @@ public class CustomerActivity {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login", produces = { APPLICATION_JSON })
     @ResponseBody
-    public Customer login(@RequestBody LoginRequest r) {
+    public Customer login(@RequestBody LoginRequest r,
+                          HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
     	return customerLogic.login(r.getEmail(),r.getPassword());
     }
     
