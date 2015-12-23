@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,6 +73,11 @@ public class MetricActivity {
 	@ResponseBody
 	public SearchParamResponse searchForParams(
 			@RequestParam(required = true) String param,
+			@RequestParam(required = false) String applicationName,
+			@RequestParam(required = false) String hostName,
+			@RequestParam(required = false) String operation,
+			@RequestParam(required = false) String marketplace,
+			@RequestParam(required = false) String metricName,
 			@RequestParam(required = true) String customerId,
 			@RequestParam(required = false) Long startTime,
 			@RequestParam(required = false) Long endTime, HttpServletResponse response) {
@@ -96,8 +102,46 @@ public class MetricActivity {
 		Set<String> marketPlaces = new HashSet<String>();
 		Set<String> hostnames = new HashSet<String>();
 		Set<String> metricNames = new HashSet<String>();
-
-		for (MetricHeader header : searchparams) {
+		//TODO Hack fuck shit, want to do actual filtering on the db, fix
+		List<MetricHeader> filteredParams = new ArrayList<MetricHeader>();
+		
+		for(MetricHeader header : searchparams) {
+			if(!StringUtils.isEmpty(applicationName)){
+				if(!header.getApplicationName().equals(applicationName)){
+					continue;
+				}
+			}
+			
+			if(!StringUtils.isEmpty(hostName)){
+				if(!header.getHostname().equals(hostName)){
+					continue;
+				}
+			}
+			
+			if(!StringUtils.isEmpty(operation)){
+				if(!header.getOperation().equals(operation)){
+					continue;
+				}
+			}
+			
+			if(!StringUtils.isEmpty(marketplace)){
+				if(!header.getMarketplace().equals(marketplace)){
+					continue;
+				}
+			}
+			
+			if(!StringUtils.isEmpty(metricName)){
+				if(!header.getMetricName().equals(metricName)){
+					continue;
+				}
+			}
+			
+			filteredParams.add(header);
+		}
+		
+		
+		
+		for (MetricHeader header : filteredParams) {
 			applicationNames.add(header.getApplicationName());
 			operationNames.add(header.getOperation());
 			marketPlaces.add(header.getMarketplace());
