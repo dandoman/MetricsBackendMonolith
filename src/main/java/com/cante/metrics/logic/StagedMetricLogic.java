@@ -8,16 +8,21 @@ import lombok.extern.log4j.Log4j;
 
 import com.cante.metrics.dao.StagedMetricDao;
 import com.cante.metrics.entity.StagedMetricEntity;
+import com.cante.metrics.entity.pojo.Customer;
 import com.cante.metrics.entity.pojo.StagedMetric;
 
 @Log4j
 public class StagedMetricLogic {
-	@Setter StagedMetricDao dao;
-	
+	@Setter private StagedMetricDao dao;
+	@Setter private CustomerLogic customerLogic;
 	public List<StagedMetric> stageMetrics(String apiKey, List<StagedMetric> metrics) {
 		List<StagedMetric> failures = new ArrayList<StagedMetric>();
 		//getOwnerForAPIKey
-		String ownerId = "342efwdfwef";
+		Customer customer = customerLogic.getCustomerForAPIKey(apiKey);
+		if(customer == null){
+			return metrics;
+		}
+		String ownerId = customer.getId();
 		
 		for(StagedMetric m : metrics){
 			try{

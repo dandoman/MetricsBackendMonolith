@@ -24,6 +24,7 @@
 	</bean>
 	<bean id="stagedMetricLogic" class="com.cante.metrics.logic.StagedMetricLogic">
 		<property name="dao" ref="stagedMetricDao" />
+		<property name="customerLogic" ref="customerLogic" />
 	</bean>
 
 </beans>

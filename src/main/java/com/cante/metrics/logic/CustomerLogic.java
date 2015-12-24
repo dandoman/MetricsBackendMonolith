@@ -157,7 +157,7 @@ public class CustomerLogic {
 		}
 	}
 	
-	public boolean isValidAPIKey(String apiKey) {
-		return customerDao.isValidKey(apiKey);
+	public Customer getCustomerForAPIKey(String apiKey) {
+		return customerDao.getCustomerForAPIKey(apiKey);
 	}
 }
