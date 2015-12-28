@@ -32,6 +32,7 @@ public class MetricDaoImpl implements MetricDao {
 		sessionFactory.getCurrentSession().save(m);
 	}
 
+	//Add a comment for commit test
 	public List<Metric> getAllMetrics() {
 		List<MetricEntity> entityList = sessionFactory.getCurrentSession()
 				.createSQLQuery("SELECT * FROM metrics")
