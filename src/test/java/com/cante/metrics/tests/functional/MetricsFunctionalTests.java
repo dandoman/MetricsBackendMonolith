@@ -112,8 +112,7 @@ public class MetricsFunctionalTests {
 		StagedMetric newMetric = new StagedMetric();
 		newMetric.setApplicationName(appName);
 		newMetric.setMetricName(name);
-		newMetric.setEndTime(new Date().getTime());
-		newMetric.setStartTime(new Date().getTime());
+		newMetric.setTimeStamp(new Date().getTime());
 		newMetric.setMarketplace("pokemon");
 		newMetric.setOperation("testyMcTest");
 		newMetric.setValue(val);

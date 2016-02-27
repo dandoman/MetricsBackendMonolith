@@ -91,8 +91,7 @@ public class MetricClient {
 		client.init();
 		StagedMetric newMetric = new StagedMetric();
 		newMetric.setApplicationName("FunctionalTest");
-		newMetric.setEndTime(new Date().getTime());
-		newMetric.setStartTime(new Date().getTime());
+		newMetric.setTimeStamp(new Date().getTime());
 		newMetric.setHostName(InetAddress.getLocalHost().getHostName());
 		newMetric.setMarketplace("pokemon");
 		newMetric.setOperation("testyMcTest");

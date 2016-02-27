@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MetricCreator {
 
-	private static final String API_KEY = "0db202f9-bdf5-479a-aec8-4765724a4083";
+	private static final String API_KEY = "5a41733e-df01-404f-a36e-1053d73f2fd7";
 	private static HttpClient client;
 	private static final String APP_NAME = "TestApp";
 	private static final String OPERATION = "TestOperation";
@@ -74,8 +74,7 @@ public class MetricCreator {
 	private static StagedMetric buildMetric(String name, int value){
 		StagedMetric metric = new StagedMetric();
 		metric.setApplicationName(APP_NAME);
-		metric.setStartTime(new Date().getTime());
-		metric.setEndTime(new Date().getTime());
+		metric.setTimeStamp(new Date().getTime());
 		metric.setHostName(HOSTNAME);
 		metric.setMarketplace(MARKETPLACE);
 		metric.setOperation(OPERATION);
