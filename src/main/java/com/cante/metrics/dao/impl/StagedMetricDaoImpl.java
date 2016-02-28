@@ -54,8 +54,8 @@ public class StagedMetricDaoImpl implements StagedMetricDao {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(StagedMetricEntity.class);
 		c.add(Restrictions.eq("ownerId", id));
 		c.add(Restrictions.eq("status", status));
-		c.add(Restrictions.ge("startTime", start.getTime()));
-		c.add(Restrictions.le("startTime", end.getTime()));
+		c.add(Restrictions.ge("timestamp", start.getTime()));
+		c.add(Restrictions.le("timestamp", end.getTime()));
 		
 		List<StagedMetricEntity> result = c.list();
 		if(result == null){
