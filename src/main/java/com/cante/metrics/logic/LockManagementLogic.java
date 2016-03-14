@@ -3,6 +3,10 @@ package com.cante.metrics.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Setter;
+
+import com.cante.metrics.dao.CustomerDao;
+
 /*
  * As hosts come online, they will try to assign themselves responsibility for processing the monitors for different customers
  * They may take away responsibilities from other hosts
@@ -13,12 +17,10 @@ import java.util.List;
  */
 public class LockManagementLogic {
 	
+	@Setter CustomerDao dao;
+	
 	public List<String> getOwnerIdsForResponsibility(String appId){
-		List<String> ids = new ArrayList<String>();
-		ids.add("123123");
-		ids.add("456");
-		ids.add("342efwdfwef");
-		return ids;
+		return dao.getAllCustomerIds();
 	}
 
 }

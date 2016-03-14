@@ -32,6 +32,10 @@ public class MonitorLogic {
 			throw new BadArgsException("Must specify whether to alarm at less than the threshold or above the threshold");
 		}
 		
+		if(StringUtils.isEmpty(m.getEmailRecipient())) {
+			throw new BadArgsException("Must specify an email");
+		}
+		
 		if(StringUtils.isEmpty(m.getApplicationName())){
 			m.setApplicationName("ALL");
 		}
@@ -65,6 +69,10 @@ public class MonitorLogic {
 	
 	public void resetMonitor(Monitor m) {
 		dao.resetMonitor(m);
+	}
+
+	public void deleteMonitor(String id) {
+		dao.deleteMonitor(id);
 	}
 	
 }

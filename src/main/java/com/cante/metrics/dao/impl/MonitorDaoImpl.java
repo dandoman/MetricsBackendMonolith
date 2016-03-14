@@ -79,4 +79,11 @@ public class MonitorDaoImpl implements MonitorDao{
 		}
 	}
 
+	@Override
+	public void deleteMonitor(String id) {
+		MonitorEntity entity = new MonitorEntity();
+		entity.setId(id);
+		sessionFactory.getCurrentSession().delete(entity);
+	}
+
 }

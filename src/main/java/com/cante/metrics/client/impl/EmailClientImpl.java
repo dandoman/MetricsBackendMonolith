@@ -14,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 import lombok.Setter;
 
 import com.cante.metrics.client.EmailClient;
+import com.cante.metrics.entity.pojo.Metric;
 import com.cante.metrics.entity.pojo.Monitor;
 
 public class EmailClientImpl implements EmailClient {
@@ -42,13 +43,14 @@ public class EmailClientImpl implements EmailClient {
 		});
 	}
 
-	public void sendAlarm(Monitor m) throws Exception {
+	public void sendAlarm(Monitor m, Metric currentMetric) throws Exception {
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress("cante.metrics@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(m.getEmailRecipient()));
 		message.setSubject("Metric Alert");
-		message.setText(m.getDescription());
+		message.setText("<html><body>" + m.getDescription() + "<br>" + "Metric name: " + m.getMetricName() + "<br>" + "Current values: " + 
+				currentMetric + "<br>" + "Monitor type: " + m.getType() + "<br>" + "Threshold: " + m.getThreshold() + "</body></html>");
 
 		Transport.send(message);
 	}

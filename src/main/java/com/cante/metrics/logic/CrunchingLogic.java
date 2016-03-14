@@ -6,26 +6,27 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.javatuples.Pair;
-import org.javatuples.Quartet;
-import org.javatuples.Triplet;
 import org.javatuples.Tuple;
-import org.javatuples.Unit;
-
 import com.cante.metrics.entity.MetricEntity;
 import com.cante.metrics.entity.StagedMetricEntity;
-import com.cante.metrics.entity.pojo.Metric;
 
+/**
+ * This class is used to selectively aggregate the raw metrics to get the values for p0,p50,p75,p90,p99,p99.9,p99.99, p100, sum, avg, count
+ * It is currently injected into the raw metrics processing job
+ */
 public class CrunchingLogic {
 
+	/**
+	 * Used to selectively aggregate the list of raw metrics into groups based on which fields we care about
+	 * for a particular aggregation
+	 */
 	public List<List<StagedMetricEntity>> aggregate(
 			List<StagedMetricEntity> stagedMetrics, boolean appName,
 			boolean operation, boolean marketplace, boolean hostname) {
 
 		Map<Tuple,List<StagedMetricEntity>> aggregation = new HashMap<Tuple, List<StagedMetricEntity>>();
 
+		//Boolean flags are all passed by value, meaning that the aggregation tuple will not change size for a given aggregation
 		for(StagedMetricEntity m : stagedMetrics){
 			TupleBuilder builder = new TupleBuilder();
 			

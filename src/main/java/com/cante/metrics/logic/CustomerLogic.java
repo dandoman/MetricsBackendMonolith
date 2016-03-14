@@ -17,7 +17,9 @@ import com.cante.metrics.entity.CustomerEntity;
 import com.cante.metrics.entity.pojo.Customer;
 import com.cante.metrics.exception.BadArgsException;
 import com.cante.metrics.exception.NotAuthorizedException;
+import com.cante.metrics.exception.NotFoundException;
 import com.cante.metrics.request.CreateCustomerRequest;
+import com.cante.metrics.request.UpdateCustomerRequest;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -159,5 +161,26 @@ public class CustomerLogic {
 	
 	public Customer getCustomerForAPIKey(String apiKey) {
 		return customerDao.getCustomerForAPIKey(apiKey);
+	}
+
+	public Customer getCustomerById(String customerId) {
+		return customerDao.getCustomerById(customerId);
+	}
+
+	public Customer updateCustomer(String id, UpdateCustomerRequest r) {
+		Customer c = customerDao.getCustomerById(id);
+		if(c == null) {
+			throw new NotFoundException("Customer not found");
+		}
+		c.setAccountType(r.getAccountType());
+		c.setBillingAddress(r.getBillingAddress());
+		c.setBillingName(r.getBillingName());
+		c.setContactEmail(r.getContactEmail());
+		c.setContactName(r.getContactName());
+		c.setContactPhoneNumber(r.getContactPhoneNumber());
+		c.setOrganizationAddress(r.getOrganizationAddress());
+		c.setOrganizationName(r.getOrganizationName());
+		
+		return customerDao.updateCustomer(c);
 	}
 }

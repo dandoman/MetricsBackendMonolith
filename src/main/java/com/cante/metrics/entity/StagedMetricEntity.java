@@ -24,7 +24,7 @@ public class StagedMetricEntity {
 	private String operation;
 	private String marketplace;
 	private String hostName;
-	private long timeStamp;
+	private long timestamp;
 	private String metricName;
 	private double value;
 	private Date creationDate;
@@ -37,7 +37,7 @@ public class StagedMetricEntity {
 		this.operation = m.getOperation();
 		this.marketplace = m.getMarketplace();
 		this.hostName = m.getHostName();
-		this.timeStamp = m.getTimeStamp();
+		this.timestamp = m.getTimeStamp();
 		this.metricName = m.getMetricName();
 		this.value = m.getValue();
 	}
@@ -45,7 +45,7 @@ public class StagedMetricEntity {
 	public StagedMetric getStagedMetric() {
 		StagedMetric m = new StagedMetric();
 		m.setApplicationName(applicationName);
-		m.setTimeStamp(timeStamp);
+		m.setTimeStamp(timestamp);
 		m.setHostName(hostName);
 		m.setMarketplace(marketplace);
 		m.setMetricName(metricName);

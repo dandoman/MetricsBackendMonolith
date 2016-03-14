@@ -30,7 +30,7 @@ public class MonitorProcessor {
 	
 	public void init() {
 		selfHostId = selfHostId + "-" + UUID.randomUUID().toString();
-		log.info(String.format("Cruncher using %s as host id", selfHostId));
+		log.info(String.format("Monitor processor using %s as host id", selfHostId));
 	}
 	
 	@Transactional
@@ -50,6 +50,7 @@ public class MonitorProcessor {
 
 	private void processMonitors(List<Monitor> monitors, String ownerId) {
 		for(Monitor m : monitors){
+			log.info("Processing monitor: " + m + " for owner: " + ownerId);
 			checkMonitor(m,ownerId);
 		}
 	}
@@ -90,14 +91,14 @@ public class MonitorProcessor {
 		
 		if(metrics.size() == 0){
 			if(m.getLess()){
-				fireMonitor(m);
+				fireMonitor(m, null);
 			}
 			return;
 		}
 		
 		Metric metric = metrics.get(0);
 		if(needToFire(metric,m)){
-			fireMonitor(m);
+			fireMonitor(m, metric);
 			return;
 		}
 		else{
@@ -166,7 +167,7 @@ public class MonitorProcessor {
 		
 	}
 
-	private void fireMonitor(Monitor m) {
+	private void fireMonitor(Monitor m, Metric currentMetric) {
 		monitorLogic.fireMonitor(m);
 		
 		//For now, we fire every time. In future, we implement a number of counts before we fire
@@ -176,7 +177,7 @@ public class MonitorProcessor {
 		if(countIncludingCurrent > countBeforeFire){
 			try {
 				log.info("Sending email to " + m.getEmailRecipient());
-				emailClient.sendAlarm(m);
+				emailClient.sendAlarm(m, currentMetric);
 			} catch (Exception e) {
 				log.error(String.format("Error when sending email for %s",m.toString()),e);
 			}

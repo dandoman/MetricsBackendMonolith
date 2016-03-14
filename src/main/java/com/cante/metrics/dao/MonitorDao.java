@@ -11,5 +11,6 @@ public interface MonitorDao {
 	public List<Monitor> queryMonitors(MonitorSearchParam p);
 	public void fireMonitor(Monitor m);
 	public void resetMonitor(Monitor m);
+	public void deleteMonitor(String id);
 
 }

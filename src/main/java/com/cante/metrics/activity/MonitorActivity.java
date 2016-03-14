@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,5 +55,11 @@ public class MonitorActivity {
     	Monitor created = logic.createMonitor(m,r.getCustomerId());
     	
     	return created;
+    }
+    
+    @RequestMapping(method = RequestMethod.DELETE, produces = { APPLICATION_JSON }, value = "/{id}")
+    @ResponseBody
+    public void deleteMonitor(@PathVariable String id) {
+    	logic.deleteMonitor(id);
     }
 }
