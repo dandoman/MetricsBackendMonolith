@@ -46,11 +46,12 @@ public class EmailClientImpl implements EmailClient {
 	public void sendAlarm(Monitor m, Metric currentMetric) throws Exception {
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress("cante.metrics@gmail.com"));
+		message.setHeader("Content-Type", "text/html");
+		message.setContent("<html><body>" + m.getDescription() + "<br>" + "Metric name: " + m.getMetricName() + "<br>" + "Current values: " + 
+				currentMetric + "<br>" + "Monitor type: " + m.getType() + "<br>" + "Threshold: " + m.getThreshold() + "</body></html>", "text/html");
 		message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(m.getEmailRecipient()));
 		message.setSubject("Metric Alert");
-		message.setText("<html><body>" + m.getDescription() + "<br>" + "Metric name: " + m.getMetricName() + "<br>" + "Current values: " + 
-				currentMetric + "<br>" + "Monitor type: " + m.getType() + "<br>" + "Threshold: " + m.getThreshold() + "</body></html>");
 
 		Transport.send(message);
 	}
