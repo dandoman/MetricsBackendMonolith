@@ -10,6 +10,7 @@ public interface CustomerDao {
 	public CustomerEntity getUserForEmailLogin(String email);
 	public Customer getCustomerForAPIKey(String apiKey);
 	public Customer getCustomerById(String customerId);
-	public Customer updateCustomer(Customer c);
+	public CustomerEntity getCustomerEntityById(String customerId);
+	public Customer updateCustomer(CustomerEntity c);
 	public List<String> getAllCustomerIds();
 }

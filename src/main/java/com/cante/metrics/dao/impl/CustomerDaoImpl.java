@@ -71,22 +71,9 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
-	public Customer updateCustomer(Customer c) {
-		CustomerEntity entity = (CustomerEntity) sessionFactory.getCurrentSession().get(CustomerEntity.class, c.getId());
-		if(entity == null) {
-			throw new NotFoundException("Not found");
-		}
-		entity.setApiKey(c.getApiKey());
-		entity.setBillingAddress(c.getBillingAddress());
-		entity.setBillingName(c.getBillingName());
-		entity.setContactEmail(c.getContactEmail());
-		entity.setContactName(c.getContactName());
-		entity.setContactPhoneNumber(c.getContactPhoneNumber());
-		entity.setLastUpdatedDate(DateTime.now().toDate());
-		entity.setOrganizationAddress(c.getOrganizationAddress());
-		entity.setOrganizationName(c.getOrganizationName());
-		sessionFactory.getCurrentSession().save(entity);
-		return entity.toCustomer();
+	public Customer updateCustomer(CustomerEntity c) {
+		sessionFactory.getCurrentSession().save(c);
+		return c.toCustomer();
 	}
 
 	@Override
@@ -104,5 +91,10 @@ public class CustomerDaoImpl implements CustomerDao {
 			customerIds.add(entity.getId());
 		}
 		return customerIds;
+	}
+
+	@Override
+	public CustomerEntity getCustomerEntityById(String customerId) {
+		return (CustomerEntity) sessionFactory.getCurrentSession().get(CustomerEntity.class, customerId);
 	}	
 }
