@@ -10,7 +10,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
-import org.hamcrest.core.IsEqual;
 import org.joda.time.DateTime;
 import org.springframework.util.StringUtils;
 
