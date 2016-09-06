@@ -20,3 +20,5 @@ psql -d integ -U integ -h integ.cezc1rn98646.us-west-2.rds.amazonaws.com -W
 
 
 *Run metric creator: mvn exec:java -Dexec.mainClass="com.cante.metrics.scripts.MetricCreator"
+
+Note that all db credentials in the source are no longer valid which is why we elected to leave them there when making this repo public
